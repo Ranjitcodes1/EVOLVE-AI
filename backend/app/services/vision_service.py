@@ -42,8 +42,14 @@ class VisionService:
         self._arcface_input: str = ""
         self._arcface_output: str = ""
         self._active_model: str = settings.BIOMETRIC_MODEL
-        self._init_models()
+        self._models_loaded: bool = False
         self._initialized = True
+
+    def _ensure_models_loaded(self):
+        """Lazy-loads AI models on first inference to ensure lightweight <50MB cold-boot."""
+        if not self._models_loaded:
+            self._init_models()
+            self._models_loaded = True
 
     def _init_models(self):
         print(f"Initializing Vision Engine (Primary: {self._active_model})...")
@@ -68,22 +74,23 @@ class VisionService:
             except Exception as e:
                 print(f" [WARN] Failed to initialize SFace: {e}")
 
-        # 3. ArcFace (512-d) with Hardware Clamping for 2-Core / 4-Thread CPU
+        # 3. ArcFace (512-d) with Strict Memory Clamping for 512MB RAM Containers
         if os.path.exists(ARCFACE_PATH):
             try:
                 opts = ort.SessionOptions()
-                # Hardware clamping: limits ONNX threads to 2 so system remains responsive
-                opts.intra_op_num_threads = 2
+                # Hardware clamping: single-threaded execution + disable huge memory arena
+                opts.intra_op_num_threads = 1
                 opts.inter_op_num_threads = 1
-                opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
-                opts.enable_cpu_mem_arena = True
+                opts.enable_cpu_mem_arena = False
+                opts.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
+                opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_BASIC
 
                 self._arcface_session = ort.InferenceSession(
                     ARCFACE_PATH, sess_options=opts, providers=["CPUExecutionProvider"]
                 )
                 self._arcface_input = self._arcface_session.get_inputs()[0].name
                 self._arcface_output = self._arcface_session.get_outputs()[0].name
-                print(f" [OK] ArcFace (512-d) Engine loaded with AVX-512 optimization: {ARCFACE_PATH}")
+                print(f" [OK] ArcFace (512-d) Engine loaded with low-memory arena: {ARCFACE_PATH}")
             except Exception as e:
                 print(f" [WARN] Failed to initialize ArcFace ONNXRuntime session: {e}")
         else:
@@ -100,6 +107,7 @@ class VisionService:
         """
         Extracts 512-d unit vector via ArcFace (or 128-d via SFace if ArcFace is unavailable).
         """
+        self._ensure_models_loaded()
         if self._arcface_session is not None and self._active_model == "arcface_512d":
             # ArcFace input: (1, 112, 112, 3), float32 normalized to [-1, 1]
             resized = cv2.resize(aligned_face, (112, 112)).astype(np.float32)
@@ -136,6 +144,7 @@ class VisionService:
         - Face must be adequately sized (>= 60x60)
         - Extracts 512-d biometric embedding
         """
+        self._ensure_models_loaded()
         img = self._decode_image(image_bytes)
         h, w, _ = img.shape
 
@@ -196,6 +205,7 @@ class VisionService:
         Detects all student faces in a wide-angle lecture hall capture.
         Returns list of { bbox, confidence, embedding (512-d), is_live, liveness_score }
         """
+        self._ensure_models_loaded()
         img = self._decode_image(image_bytes)
         h, w, _ = img.shape
         detected = []
