@@ -65,9 +65,11 @@ def login(payload: LoginRequest, response: Response, db: Session = Depends(get_d
             detail=f"Account is currently {profile.status}. Contact administration."
         )
 
-    # Determine user identity and role
+    # Determine user identity and role (Unify "faculty" and "teacher" to "teacher" for frontend routing)
     name = profile.email
     entity_id = None
+    user_role = "teacher" if profile.role in ("faculty", "teacher") else profile.role
+
     if profile.role in ("faculty", "teacher") and profile.teacher:
         name = profile.teacher.full_name
         entity_id = profile.teacher.id
@@ -78,7 +80,7 @@ def login(payload: LoginRequest, response: Response, db: Session = Depends(get_d
     access_token = create_access_token({
         "sub": profile.id,
         "email": profile.email,
-        "role": profile.role,
+        "role": user_role,
         "name": name,
         "entity_id": entity_id
     })
@@ -100,7 +102,7 @@ def login(payload: LoginRequest, response: Response, db: Session = Depends(get_d
         access_token=access_token,
         token_type="bearer",
         expires_in=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
-        role=profile.role,
+        role=user_role,
         profile_id=profile.id,
         email=profile.email,
         name=name,

@@ -1,4 +1,5 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api/v1";
+const RAW_API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api/v1";
+const API_BASE = RAW_API_BASE.replace(/\/+$/, "");
 
 export interface UserProfile {
   id: string;
@@ -173,7 +174,11 @@ class ApiClient {
       headers["Content-Type"] = "application/json";
     }
 
-    const res = await fetch(`${API_BASE}${endpoint}`, {
+    const cleanBase = API_BASE.endsWith("/api/v1") ? API_BASE : `${API_BASE}/api/v1`;
+    const cleanEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+    const url = `${cleanBase}${cleanEndpoint}`;
+
+    const res = await fetch(url, {
       ...options,
       headers,
     });

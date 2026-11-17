@@ -92,20 +92,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
     try {
       const res = await api.login(email, password);
+      const unifiedRole = (res.role === "faculty" || res.role === "teacher") ? "teacher" : res.role;
       setUser({
         id: res.profile_id,
         email: res.email,
-        role: res.role as any,
+        role: unifiedRole as any,
         name: res.name,
         status: "active",
         entity_id: res.entity_id,
       });
 
-      if (res.role === "teacher") {
+      if (unifiedRole === "teacher") {
         router.push("/teacher");
-      } else if (res.role === "student") {
+      } else if (unifiedRole === "student") {
         router.push("/student");
-      } else if (res.role === "admin") {
+      } else if (unifiedRole === "admin") {
         router.push("/admin");
       }
     } finally {

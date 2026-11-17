@@ -27,17 +27,18 @@ function LoginFormContent() {
   // AUTO-REDIRECT & AUTO-SESSION CLEAR GUARD
   useEffect(() => {
     if (user) {
-      if (!roleParam || user.role === roleParam) {
-        if (user.role === "student") {
+      const userRole = (user.role === "faculty" || (user.role as any) === "teacher") ? "teacher" : user.role;
+      const expectedRole = (roleParam === "faculty" || roleParam === "teacher") ? "teacher" : roleParam;
+
+      if (!expectedRole || userRole === expectedRole) {
+        if (userRole === "student") {
           router.replace("/student");
-        } else if (user.role === "teacher") {
+        } else if (userRole === "teacher") {
           router.replace("/teacher");
-        } else if (user.role === "admin") {
+        } else if (userRole === "admin") {
           router.replace("/admin");
         }
-      } else if (roleParam && user.role !== roleParam) {
-        // Optimised cross-portal switch: If entering sign-in for a different role,
-        // silently clear the previous role session so the form is 100% clean.
+      } else {
         logout(null);
       }
     }
