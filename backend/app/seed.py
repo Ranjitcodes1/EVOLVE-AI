@@ -176,12 +176,6 @@ def seed_database(force_reseed: bool = False):
             designation="Associate Professor",
             status="active"
         )
-            faculty_id="FAC-CSE-001",
-            full_name="Prof. Alan Turing",
-            department_id=dept.id,
-            designation="Professor & HOD",
-            status="active"
-        )
         teacher_alias = Teacher(
             profile_id=prof_teacher.id,
             faculty_id="FAC-CSE-002",
