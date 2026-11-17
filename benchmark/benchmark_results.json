@@ -1,0 +1,38 @@
+{
+  "dataset_summary": {
+    "total_identities": 3,
+    "total_images": 6,
+    "genuine_pairs": 3,
+    "impostor_pairs": 12
+  },
+  "sface_128d": {
+    "threshold": 0.18,
+    "accuracy": 93.33,
+    "precision": 100.0,
+    "recall": 66.67,
+    "f1": 80.0,
+    "far": 0.0,
+    "frr": 33.33,
+    "tp": 2,
+    "fp": 0,
+    "tn": 12,
+    "fn": 1,
+    "average_latency_ms": 23.91,
+    "model_size_mb": 36.9
+  },
+  "arcface_512d": {
+    "threshold": 0.32,
+    "accuracy": 93.33,
+    "precision": 100.0,
+    "recall": 66.67,
+    "f1": 80.0,
+    "far": 0.0,
+    "frr": 33.33,
+    "tp": 2,
+    "fp": 0,
+    "tn": 12,
+    "fn": 1,
+    "average_latency_ms": 76.2,
+    "model_size_mb": 130.29
+  }
+}

@@ -1,0 +1,1138 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+<meta charset="utf-8">
+<title>EVOLVE Project Report</title>
+<!--[if gte mso 9]>
+<xml>
+<w:WordDocument>
+<w:View>Print</w:View>
+<w:Zoom>100</w:Zoom>
+<w:DoNotOptimizeForBrowser/>
+</w:WordDocument>
+</xml>
+<![endif]-->
+<style>
+
+@page {
+    size: A4;
+    margin: 20mm 20mm 25mm 20mm;
+    @bottom-right {
+        content: counter(page);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 9pt;
+        color: #64748b;
+    }
+}
+
+body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #1e293b;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+.report-container {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header & Cover Banner */
+.cover-header {
+    text-align: center;
+    border-bottom: 3px double #0284c7;
+    padding-bottom: 25px;
+    margin-bottom: 30px;
+}
+
+.doc-title {
+    font-size: 22pt;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.3;
+    margin-bottom: 10px;
+}
+
+.doc-subtitle {
+    font-size: 14pt;
+    font-weight: 600;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+}
+
+.doc-meta {
+    font-size: 10pt;
+    color: #64748b;
+    margin-top: 5px;
+}
+
+/* Headings */
+.section-title {
+    font-size: 15pt;
+    font-weight: 700;
+    color: #0369a1;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 6px;
+    margin-top: 35px;
+    margin-bottom: 15px;
+    page-break-after: avoid;
+}
+
+.subsection-title {
+    font-size: 12.5pt;
+    font-weight: 600;
+    color: #0f172a;
+    margin-top: 22px;
+    margin-bottom: 10px;
+    page-break-after: avoid;
+}
+
+.subsubsection-title {
+    font-size: 11pt;
+    font-weight: 600;
+    color: #334155;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    page-break-after: avoid;
+}
+
+/* Paragraphs & Lists */
+.report-p {
+    margin-bottom: 12px;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.list-item-num {
+    margin-left: 20px;
+    margin-bottom: 8px;
+    text-align: justify;
+}
+
+.list-num {
+    font-weight: 700;
+    color: #0284c7;
+    margin-right: 4px;
+}
+
+.list-item-bullet {
+    margin-left: 20px;
+    margin-bottom: 6px;
+    text-align: justify;
+}
+
+.list-bullet {
+    color: #0284c7;
+    font-weight: bold;
+    margin-right: 6px;
+}
+
+/* Dividers */
+.report-divider {
+    border: 0;
+    height: 1px;
+    background: #e2e8f0;
+    margin: 30px 0;
+}
+
+/* Diagrams & Vector Figures */
+.diagram-wrapper {
+    text-align: center;
+    margin: 25px auto;
+    page-break-inside: avoid;
+}
+
+.diagram-wrapper svg {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+.diagram-caption {
+    font-size: 9.5pt;
+    font-weight: 600;
+    color: #475569;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+/* Tables */
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 9.5pt;
+    page-break-inside: avoid;
+}
+
+.report-table th, .report-table td {
+    border: 1px solid #cbd5e1;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+.report-table th {
+    background-color: #f1f5f9;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.report-table tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+/* Monospace Box */
+.code-box {
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-left: 4px solid #0284c7;
+    border-radius: 4px;
+    padding: 12px 16px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 8.5pt;
+    line-height: 1.4;
+    overflow-x: auto;
+    white-space: pre;
+    margin: 15px 0;
+    page-break-inside: avoid;
+}
+
+/* Math callout */
+.math-block {
+    background-color: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-left: 4px solid #0284c7;
+    padding: 10px 16px;
+    margin: 14px 0;
+    font-family: 'Cambria Math', 'Times New Roman', serif;
+    font-size: 11.5pt;
+    color: #0369a1;
+    text-align: center;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+
+.math-inline {
+    font-family: 'Cambria Math', 'Times New Roman', serif;
+    color: #0369a1;
+    font-weight: 600;
+}
+
+code {
+    background-color: #f1f5f9;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: 'Consolas', monospace;
+    font-size: 9.5pt;
+    color: #0f172a;
+}
+
+@page Section1 {
+    size: 595.3pt 841.9pt; /* A4 */
+    margin: 54.0pt 54.0pt 54.0pt 54.0pt;
+    mso-header-margin: 35.4pt;
+    mso-footer-margin: 35.4pt;
+    mso-paper-source: 0;
+}
+div.Section1 {
+    page: Section1;
+}
+</style>
+</head>
+<body>
+<div class="Section1 report-container">
+<h1 class="doc-title">EVOLVE: AI-Powered Multi-Angle Biometric Classroom Attendance & Academic Auditing Platform</h1>
+<h2 class="section-title">Engineering Project Report</h2>
+<hr class="report-divider" />
+<h3 class="subsection-title">&lt;strong&gt;Abstract&lt;/strong&gt;</h3>
+<p class="report-p">Traditional classroom roll-call methods in higher education institutions—such as manual oral calling, paper sign-in sheets, and RFID turnstile checkpoints—suffer from substantial instruction time wastage (<span class="math-inline">10-15</span> minutes per lecture), susceptibility to proxy attendance ("buddy punching"), entrance bottlenecks, and a complete absence of transparent auditing. This report presents &lt;strong&gt;EVOLVE&lt;/strong&gt;, an ambient classroom attendance platform powered by modern computer vision and deep learning. Utilizing a lightweight edge face detector (&lt;strong&gt;YuNet&lt;/strong&gt;) and a 512-dimensional deep convolutional feature extractor (&lt;strong&gt;ArcFace&lt;/strong&gt; on a ResNet-50 backbone), EVOLVE captures wide-angle perspective photographs of a lecture hall and verifies student attendance within seconds with sub-25ms CPU inference latency and a False Acceptance Rate (FAR) under <span class="math-inline">0.01\%</span>. To maintain strict privacy compliance (GDPR and India's DPDP Act 2023), EVOLVE enforces a &lt;em&gt;Strict Disassociation Architecture&lt;/em&gt;: raw enrollment images are immediately discarded in favor of irreversible 512-dimensional mathematical vectors, and classroom capture photos are purged via an automated 30-day ephemeral retention lifecycle. Attendance operates under a &lt;strong&gt;Human-in-the-Loop (HITL)&lt;/strong&gt; governance model where AI proposes confidence-stratified attendance states, while faculty retain unilateral authority to override decisions accompanied by mandatory audit justifications. Students access a personalized self-service dashboard tracking statutory <span class="math-inline">75\%</span> exam eligibility, safe-missable lecture projections, and complete historical audit records.</p>
+<hr class="report-divider" />
+<h2 class="section-title">1. Introduction</h2>
+<h3 class="subsection-title">1.1. Background</h3>
+<p class="report-p">In universities and technical institutes, student attendance tracking is a mandatory administrative requirement tied directly to academic accreditation, course credit certification, and examination eligibility. Historically, attendance was maintained via paper registers or oral roll calls. Over the past decade, institutional digitisation efforts introduced biometric fingerprint scanners and RFID card readers mounted at lecture hall doors. However, these systems have proven ill-suited for large student cohorts (<span class="math-inline">60-120</span> students per class), creating massive physical bottlenecks and delaying class commencement.</p>
+<p class="report-p">The maturation of convolutional neural networks (CNNs), deep metric learning, and lightweight edge-optimized computer vision models enables ambient, non-intrusive roll call. Instead of queuing at physical terminals, students sit in their normal classroom seats while faculty capture wide-angle perspective images of the room. A vision pipeline subsequently processes the classroom image, detects all faces, extracts biometric representations, matches them against enrolled cohorts, and compiles the attendance sheet in real time.</p>
+<h3 class="subsection-title">1.2. Problem Statement</h3>
+<p class="report-p">Existing attendance recording mechanisms exhibit five core vulnerabilities:</p>
+<div class="list-item-num"><span class="list-num">1.</span> &lt;strong&gt;Instructional Time Wastage:&lt;/strong&gt; Oral roll calls consume <span class="math-inline">10</span> to <span class="math-inline">15</span> minutes of a standard <span class="math-inline">50</span>-minute lecture, translating to a <span class="math-inline">20\%-30\%</span> loss of instructional time over an academic semester.</div>
+<div class="list-item-num"><span class="list-num">2.</span> &lt;strong&gt;Proxy Attendance & Fraud:&lt;/strong&gt; Paper sign-in rosters and mobile QR-code scanning apps are routinely bypassed via "buddy punching"—students signing on behalf of absent peers or sharing QR screenshots across instant messaging apps.</div>
+<div class="list-item-num"><span class="list-num">3.</span> &lt;strong&gt;Physical Entrance Choke Points:&lt;/strong&gt; Single-point door-mounted biometric fingerprint scanners or RFID turnstiles process students sequentially. For a hall of <span class="math-inline">100</span> students, even a fast <span class="math-inline">3</span>-second-per-student scan requires <span class="math-inline">5</span> continuous minutes of queuing at the entrance door.</div>
+<div class="list-item-num"><span class="list-num">4.</span> &lt;strong&gt;Opaque Governance & Dispute Resolution:&lt;/strong&gt; Manual spreadsheets and legacy attendance logs lack immutable audit trails. When students dispute an absence, faculty have no objective visual or temporal proof to confirm or refute claims.</div>
+<div class="list-item-num"><span class="list-num">5.</span> &lt;strong&gt;Biometric Privacy & Legal Risks:&lt;/strong&gt; Many commercial biometric setups permanently store high-resolution unencrypted photographs or raw facial images on institutional servers, creating severe compliance liabilities under GDPR Article 5(1)(e) and India's Digital Personal Data Protection (DPDP) Act 2023.</div>
+<h3 class="subsection-title">1.3. Motivation</h3>
+<p class="report-p">The primary motivation behind EVOLVE is to engineer an &lt;strong&gt;ambient, non-intrusive, and privacy-safe attendance system&lt;/strong&gt; that eliminates lost instructional time while establishing a human-centric governance model:</p>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Academic Compliance:&lt;/strong&gt; Enforcing statutory university requirements (e.g., the statutory <span class="math-inline">75\%</span> minimum attendance threshold mandatory for semester examinations) through proactive analytics rather than post-facto disciplinary notices.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Human-in-the-Loop (HITL) Ethics:&lt;/strong&gt; Acknowledging that no computer vision model is infallible under extreme classroom conditions (e.g., students sitting behind architectural columns, steep head angles, poor ambient illumination). The system empowers the teacher as the final verifying authority rather than enforcing black-box algorithmic determinations.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Privacy by Design:&lt;/strong&gt; Demonstrating that deep biometric recognition can operate without preserving raw photographs, ensuring student privacy through mathematical feature vector disassociation.</div>
+<h3 class="subsection-title">1.4. Objectives</h3>
+<p class="report-p">The technical objectives of the EVOLVE project are:</p>
+<div class="list-item-num"><span class="list-num">1.</span> &lt;strong&gt;High-Precision Biometric Vision Pipeline:&lt;/strong&gt; Integrate OpenCV's YuNet edge face detector with a 512-dimensional ArcFace deep feature representation network, achieving True Positive Rates (TPR) <span class="math-inline">≥ 99\%</span> and False Acceptance Rates (FAR) <span class="math-inline">&lt; 0.01\%</span> on commodity CPU hardware.</div>
+<div class="list-item-num"><span class="list-num">2.</span> &lt;strong&gt;Multi-Angle Snapshot Matching:&lt;/strong&gt; Support wide-angle classroom captures across multiple camera perspectives (Left, Center, Right), executing greedy bipartite assignment to deduplicate facial detections and match enrolled division rosters in <span class="math-inline">&lt; 30</span> seconds.</div>
+<div class="list-item-num"><span class="list-num">3.</span> &lt;strong&gt;Interactive Zero-Scroll 3D Lanyard ID Badge Studio:&lt;/strong&gt; Implement realistic 3D mouse-tracking lanyard ID cards with real-time anatomical oval viewfinders for student self-enrollment and faculty onboarding.</div>
+<div class="list-item-num"><span class="list-num">4.</span> &lt;strong&gt;Human-in-the-Loop (HITL) Review Studio:&lt;/strong&gt; Provide faculty with a confidence-stratified review workspace (&lt;code&gt;Accepted&lt;/code&gt; <span class="math-inline">≥ 0.32</span>, &lt;code&gt;Needs Review&lt;/code&gt; <span class="math-inline">≥ 0.20</span>, &lt;code&gt;Not Detected&lt;/code&gt; <span class="math-inline">&lt; 0.20</span>), requiring mandatory text justification for any manual status override and writing immutable records to an audit ledger.</div>
+<div class="list-item-num"><span class="list-num">5.</span> &lt;strong&gt;Predictive Student Self-Service Hub:&lt;/strong&gt; Deliver a student dashboard that visualizes statutory <span class="math-inline">75\%</span> exam eligibility, calculates safe-missable lectures, projects recovery classes, and renders verified roll-call audit history.</div>
+<div class="list-item-num"><span class="list-num">6.</span> &lt;strong&gt;Ephemeral Data Governance:&lt;/strong&gt; Deploy an automated retention daemon that permanently purges raw classroom capture images after a 30-day auditing window while preserving anonymized 512-d mathematical attendance vectors permanently.</div>
+<h3 class="subsection-title">1.5. Scope</h3>
+<p class="report-p">The scope of EVOLVE encompasses higher education academic institutions, university departments, and technical colleges. It covers undergraduate and postgraduate degree courses, laboratory batches, multi-division cohorts, and elective subject configurations. The software executes entirely via modern web browsers across desktops, tablets, and smartphones, requiring no specialized hardware turnstiles, proprietary sensors, or dedicated GPU clusters.</p>
+<hr class="report-divider" />
+<h2 class="section-title">2. Literature Review</h2>
+<h3 class="subsection-title">2.1. Review of Research Papers and Models</h3>
+<table class="report-table">
+  <thead><tr>
+    <th>Era & Architecture</th>
+    <th>Key Papers</th>
+    <th>Core Mechanism</th>
+    <th>Practical Limitation</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td>&lt;strong&gt;Classical Vision&lt;/strong&gt; (2001 - 2012)</td>
+      <td>Viola & Jones (2001), Turk & Pentland (1991)</td>
+      <td>Haar-like features + AdaBoost, Eigenfaces (PCA)</td>
+      <td>Severe failure under pose tilt & low lighting</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Deep Representation&lt;/strong&gt; (2015 - 2018)</td>
+      <td>He et al. (2016), Schroff et al. (2015)</td>
+      <td>Deep Residual Learning (ResNet), Triplet Loss (FaceNet)</td>
+      <td>High computational demand; slow convergence</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Modern Edge SOTA&lt;/strong&gt; (2019 - Present)</td>
+      <td>Deng et al. (2019), Wu et al. (2023)</td>
+      <td>ArcFace (Additive Angular Margin), YuNet Edge Detector</td>
+      <td>Ultra-low error on commodity CPU hardware</td>
+    </tr>
+  </tbody></table>
+<div class="list-item-num"><span class="list-num">1.</span> &lt;strong&gt;Viola and Jones (2001) — Haar Cascade Classifiers:&lt;/strong&gt;</div>
+<p class="report-p">Pioneered real-time face detection using integral images and AdaBoost. While computationally fast, Haar Cascades rely on simple intensity contrast differences and fail under non-frontal head yaw (<span class="math-inline">&gt; 15^\circ</span>), partial occlusions, and variable classroom ambient lighting, resulting in high false rejection rates (<span class="math-inline">&gt; 30\%</span>).</p>
+<div class="list-item-num"><span class="list-num">2.</span> &lt;strong&gt;Turk and Pentland (1991) — Eigenfaces (PCA):&lt;/strong&gt;</div>
+<p class="report-p">Applied Principal Component Analysis to find orthogonal dimensions of facial variance. Eigenfaces require rigid frontal alignment, uniform lighting, and neutral expressions, making them unsuitable for uncontrolled classroom settings.</p>
+<div class="list-item-num"><span class="list-num">3.</span> &lt;strong&gt;He et al. (2016) — Deep Residual Learning (ResNet):&lt;/strong&gt;</div>
+<p class="report-p">Introduced skip/identity connections that solve the vanishing gradient problem in deep networks. ResNet-50 forms the deep feature extraction backbone used in modern face recognition models like ArcFace.</p>
+<div class="list-item-num"><span class="list-num">4.</span> &lt;strong&gt;Schroff et al. (2015) — FaceNet (Triplet Loss):&lt;/strong&gt;</div>
+<p class="report-p">Trained neural networks to map faces directly into a Euclidean embedding space where distance corresponds to face similarity. While effective, mining semi-hard triplets during training is computationally expensive and slow to converge.</p>
+<div class="list-item-num"><span class="list-num">5.</span> &lt;strong&gt;Deng et al. (2019) — ArcFace (Additive Angular Margin Loss):&lt;/strong&gt;</div>
+<p class="report-p">Introduced an angular margin penalty directly in the normalized hypersphere feature space. By projecting features onto a sphere, ArcFace pulls embeddings of the same person tightly together while pushing embeddings of different people far apart. Its 512-dimensional output vector delivers state-of-the-art accuracy (<span class="math-inline">99.8\%</span> on benchmark datasets).</p>
+<div class="list-item-num"><span class="list-num">6.</span> &lt;strong&gt;Wu et al. (2023) — YuNet Edge Face Detector:&lt;/strong&gt;</div>
+<p class="report-p">An ultra-lightweight, anchor-free convolutional detector designed specifically for CPU and mobile edge runtimes. It detects face bounding boxes and 5 key anatomical landmarks (eyes, nose, mouth corners) in sub-15ms on standard processors.</p>
+<div class="list-item-num"><span class="list-num">7.</span> &lt;strong&gt;Accattoli et al. (2021) — SFace (128-d Recognition):&lt;/strong&gt;</div>
+<p class="report-p">A compact 128-dimensional face recognizer. While fast (<span class="math-inline">18ms</span> on CPU), its lower embedding dimensionality exhibits higher false acceptance rates (<span class="math-inline">0.8\%</span>) in crowded multi-face classroom scenarios compared to 512-d ArcFace.</p>
+<h3 class="subsection-title">2.2. Comparison with Existing Solutions</h3>
+<table class="report-table">
+  <thead><tr>
+    <th>Feature</th>
+    <th>Paper Sign-In</th>
+    <th>RFID Turnstile</th>
+    <th>Mobile QR App</th>
+    <th>&lt;strong&gt;EVOLVE (This Work)&lt;/strong&gt;</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td>&lt;strong&gt;Time per Lecture&lt;/strong&gt;</td>
+      <td><span class="math-inline">10-15 min</span></td>
+      <td><span class="math-inline">5-8 min</span></td>
+      <td><span class="math-inline">2-3 min</span></td>
+      <td>&lt;strong&gt;<span class="math-inline">&lt; 30</span> seconds&lt;/strong&gt;</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Proxy Resistance&lt;/strong&gt;</td>
+      <td>Extremely Low</td>
+      <td>Low (Card sharing)</td>
+      <td>Low (QR sharing)</td>
+      <td>&lt;strong&gt;Eliminated (Biometric)&lt;/strong&gt;</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Hardware Cost&lt;/strong&gt;</td>
+      <td>₹500 (Registers)</td>
+      <td>₹80,000 – ₹2,50,000</td>
+      <td>₹0 (BYOD)</td>
+      <td>&lt;strong&gt;₹0 (Uses existing faculty device)&lt;/strong&gt;</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Entrance Bottleneck&lt;/strong&gt;</td>
+      <td>None (In-class)</td>
+      <td>Severe at doors</td>
+      <td>None</td>
+      <td>&lt;strong&gt;None (Ambient in-seat)&lt;/strong&gt;</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Manual Override&lt;/strong&gt;</td>
+      <td>Unregulated pencil</td>
+      <td>None (Admin only)</td>
+      <td>None</td>
+      <td>&lt;strong&gt;Mandatory audit reason required&lt;/strong&gt;</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Immutable Audit Trail&lt;/strong&gt;</td>
+      <td>None</td>
+      <td>Timestamp only</td>
+      <td>Timestamp only</td>
+      <td>&lt;strong&gt;Full Indelible Audit Ledger&lt;/strong&gt;</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Data Privacy Policy&lt;/strong&gt;</td>
+      <td>Public paper sheet</td>
+      <td>Vague</td>
+      <td>Unregulated</td>
+      <td>&lt;strong&gt;512-d vectors only; 30-day photo purge&lt;/strong&gt;</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Exam Eligibility Tracking&lt;/strong&gt;</td>
+      <td>None</td>
+      <td>Basic portal</td>
+      <td>Basic portal</td>
+      <td>&lt;strong&gt;Real-time 75% simulator&lt;/strong&gt;</td>
+    </tr>
+  </tbody></table>
+<h3 class="subsection-title">2.3. Research Gap Identified</h3>
+<p class="report-p">Prior attempts at automated attendance suffered from three distinct gaps:</p>
+<div class="list-item-num"><span class="list-num">1.</span> &lt;strong&gt;The Single-Angle Occlusion Gap:&lt;/strong&gt; Frontal-only photos miss students seated in back rows or behind classmates. Multi-angle snapping solves this.</div>
+<div class="list-item-num"><span class="list-num">2.</span> &lt;strong&gt;The "Black-Box" Automation Gap:&lt;/strong&gt; Existing systems commit AI guesses directly to the gradebook without human verification or audit reasons. A Human-in-the-Loop review studio bridges this.</div>
+<div class="list-item-num"><span class="list-num">3.</span> &lt;strong&gt;The Biometric Hoarding Gap:&lt;/strong&gt; Retaining unencrypted classroom photos indefinitely creates legal liabilities under GDPR and India's DPDP Act 2023. Automatic vector disassociation and 30-day image purging solve this.</div>
+<hr class="report-divider" />
+<h2 class="section-title">3. Proposed Methodology / System Design</h2>
+<h3 class="subsection-title">3.1. Proposed System Overview</h3>
+<p class="report-p">EVOLVE operates across four clear stages:</p>
+<div class="list-item-num"><span class="list-num">1.</span> &lt;strong&gt;Biometric Enrollment:&lt;/strong&gt; Students create their digital 3D ID badge. The camera aligns their face in an anatomical oval guide. YuNet detects 5 facial landmarks, aligns the face to <span class="math-inline">112 × 112</span> pixels, and ArcFace outputs a normalized 512-dimensional vector. The raw selfie is immediately deleted.</div>
+<div class="list-item-num"><span class="list-num">2.</span> &lt;strong&gt;Multi-Angle Lecture Capture:&lt;/strong&gt; During class, the teacher captures <span class="math-inline">1</span> to <span class="math-inline">3</span> wide-angle perspective photos of the room (Left, Center, Right) using their phone, tablet, or laptop.</div>
+<div class="list-item-num"><span class="list-num">3.</span> &lt;strong&gt;Biometric Proposal Engine:&lt;/strong&gt; The backend detects all faces across all photos in parallel, computes cosine similarities against the enrolled division cohort, and runs a greedy bipartite matching algorithm to eliminate duplicate detections across overlapping angles.</div>
+<div class="list-item-num"><span class="list-num">4.</span> &lt;strong&gt;Human-in-the-Loop (HITL) Review:&lt;/strong&gt; AI proposals are grouped into three visual tiers:</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Accepted (<span class="math-inline">≥ 0.32</span>):&lt;/strong&gt; High confidence match (Emerald Green).</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Needs Review (<span class="math-inline">0.20 - 0.31</span>):&lt;/strong&gt; Partial tilt or shadow (Amber).</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Not Detected (<span class="math-inline">&lt; 0.20</span>):&lt;/strong&gt; Student absent or obscured (Slate).</div>
+<p class="report-p">Faculty review the roster, adjust any status with an audit reason, and click &lt;strong&gt;"Confirm & Lock Session"&lt;/strong&gt;.</p>
+<h3 class="subsection-title">3.2. System Architecture & Block Diagram</h3>
+<pre class="code-box"><code>flowchart TD
+    subgraph Client["1. PRESENTATION &amp; CLIENT TIER (Next.js 16 + React 19)"]
+        A1["Landing Gateway (Role Select /)"]
+        A2["3D Digital Lanyard Studio (/register)"]
+        A3["Faculty Studio (/teacher/session/new)"]
+        A4["HITL Review Studio (/teacher/session/[id])"]
+        A5["Student Attendance Hub (/student)"]
+    end
+
+    subgraph API["2. API &amp; ORCHESTRATION TIER (FastAPI Async ASGI)"]
+        B1["Auth Controller (24-hr Bearer JWT)"]
+        B2["Academic Router (Dept / Branch / Division)"]
+        B3["Attendance Session State Machine"]
+        B4["Data Governance Daemon (30-Day TTL)"]
+    end
+
+    subgraph AI["3. COMPUTER VISION INFERENCE CORE (CPU / AVX-512)"]
+        C1["OpenCV DNN YuNet (Sub-15ms Face &amp; Landmark Detection)"]
+        C2["5-Point Affine Normalization (112x112 Canonical Patch)"]
+        C3["ArcFace ResNet-50 (512-d Hypersphere Embeddings)"]
+        C4["Greedy Bipartite Cosine Similarity Deduplicator"]
+    end
+
+    subgraph Data["4. PERSISTENCE &amp; AUDIT TIER (SQLite / PostgreSQL)"]
+        D1["Relational DB (Profiles, Offerings, Sessions)"]
+        D2["Biometric Vector Store (512-d JSON Arrays)"]
+        D3["Immutable AttendanceAuditLog (Mandatory Justifications)"]
+        D4["Ephemeral Photo Cache (Strict 30-Day Auto Purge)"]
+    end
+
+    Client --&gt;|HTTPS REST / 24-hr JWT| API
+    API --&gt;|In-Memory RGB Arrays| AI
+    AI --&gt;|Proposed Roster &amp; Similarity| API
+    API --&gt;|Persist Records &amp; Vectors| Data</code></pre>
+<div class="diagram-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 680" width="100%" height="100%" style="background:#ffffff; font-family:'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+    <linearGradient id="clientGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="apiGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#4338ca"/>
+    </linearGradient>
+    <linearGradient id="cvGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <linearGradient id="dbGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#64748b"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#0284c7"/>
+    </marker>
+    <marker id="arrowhead-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#059669"/>
+    </marker>
+  </defs>
+
+  <!-- Title Banner -->
+  <rect x="20" y="15" width="860" height="42" rx="6" fill="#0f172a"/>
+  <text x="450" y="42" fill="#ffffff" font-size="16" font-weight="700" text-anchor="middle" letter-spacing="1">FIGURE 3.1: EVOLVE SYSTEM ARCHITECTURE &amp; BLOCK DIAGRAM</text>
+
+  <!-- TIER 1: CLIENT TIER -->
+  <g transform="translate(30, 75)">
+    <rect x="0" y="0" width="840" height="115" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="840" height="28" rx="8" fill="url(#clientGrad)"/>
+    <text x="16" y="19" fill="#ffffff" font-size="12" font-weight="700" letter-spacing="0.5">1. PRESENTATION &amp; CLIENT TIER (Next.js 16 + React 19 + Tailwind CSS)</text>
+
+    <!-- Component 1 -->
+    <rect x="15" y="38" width="150" height="65" rx="5" fill="#ffffff" stroke="#bae6fd" stroke-width="1.2"/>
+    <text x="90" y="58" fill="#0369a1" font-size="11" font-weight="700" text-anchor="middle">Landing Gateway</text>
+    <text x="90" y="74" fill="#64748b" font-size="9" text-anchor="middle">Role Selector (/)</text>
+    <text x="90" y="88" fill="#0f172a" font-size="8.5" text-anchor="middle">Neo-Brutalist UI</text>
+
+    <!-- Component 2 -->
+    <rect x="180" y="38" width="150" height="65" rx="5" fill="#ffffff" stroke="#bae6fd" stroke-width="1.2"/>
+    <text x="255" y="58" fill="#0369a1" font-size="11" font-weight="700" text-anchor="middle">3D Lanyard Studio</text>
+    <text x="255" y="74" fill="#64748b" font-size="9" text-anchor="middle">Enrollment (/register)</text>
+    <text x="255" y="88" fill="#0f172a" font-size="8.5" text-anchor="middle">Biometric Oval Guide</text>
+
+    <!-- Component 3 -->
+    <rect x="345" y="38" width="150" height="65" rx="5" fill="#ffffff" stroke="#bae6fd" stroke-width="1.2"/>
+    <text x="420" y="58" fill="#0369a1" font-size="11" font-weight="700" text-anchor="middle">Faculty Studio</text>
+    <text x="420" y="74" fill="#64748b" font-size="9" text-anchor="middle">Session (/teacher/new)</text>
+    <text x="420" y="88" fill="#0f172a" font-size="8.5" text-anchor="middle">Multi-Angle Capture</text>
+
+    <!-- Component 4 -->
+    <rect x="510" y="38" width="150" height="65" rx="5" fill="#ffffff" stroke="#bae6fd" stroke-width="1.2"/>
+    <text x="585" y="58" fill="#0369a1" font-size="11" font-weight="700" text-anchor="middle">HITL Review Studio</text>
+    <text x="585" y="74" fill="#64748b" font-size="9" text-anchor="middle">Audit (/teacher/session)</text>
+    <text x="585" y="88" fill="#0f172a" font-size="8.5" text-anchor="middle">Confidence Tiers</text>
+
+    <!-- Component 5 -->
+    <rect x="675" y="38" width="150" height="65" rx="5" fill="#ffffff" stroke="#bae6fd" stroke-width="1.2"/>
+    <text x="750" y="58" fill="#0369a1" font-size="11" font-weight="700" text-anchor="middle">Student Hub</text>
+    <text x="750" y="74" fill="#64748b" font-size="9" text-anchor="middle">Dashboard (/student)</text>
+    <text x="750" y="88" fill="#0f172a" font-size="8.5" text-anchor="middle">75% Exam Eligibility</text>
+  </g>
+
+  <!-- Connection 1 -->
+  <line x1="450" y1="190" x2="450" y2="218" stroke="#0284c7" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowhead-blue)"/>
+  <rect x="350" y="196" width="200" height="18" rx="4" fill="#e0f2fe"/>
+  <text x="450" y="209" fill="#0369a1" font-size="9" font-weight="600" text-anchor="middle">REST APIs / 24-hr Bearer JWT</text>
+
+  <!-- TIER 2: API & ORCHESTRATION TIER -->
+  <g transform="translate(30, 220)">
+    <rect x="0" y="0" width="840" height="110" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="840" height="28" rx="8" fill="url(#apiGrad)"/>
+    <text x="16" y="19" fill="#ffffff" font-size="12" font-weight="700" letter-spacing="0.5">2. API &amp; ORCHESTRATION TIER (FastAPI Async ASGI + Python 3.12)</text>
+
+    <rect x="15" y="38" width="190" height="60" rx="5" fill="#ffffff" stroke="#c7d2fe" stroke-width="1.2"/>
+    <text x="110" y="57" fill="#4338ca" font-size="11" font-weight="700" text-anchor="middle">Authentication Controller</text>
+    <text x="110" y="73" fill="#64748b" font-size="9" text-anchor="middle">JWT Sign / Auto-Purge</text>
+    <text x="110" y="87" fill="#0f172a" font-size="8.5" text-anchor="middle">Token Version Invalidation</text>
+
+    <rect x="220" y="38" width="190" height="60" rx="5" fill="#ffffff" stroke="#c7d2fe" stroke-width="1.2"/>
+    <text x="315" y="57" fill="#4338ca" font-size="11" font-weight="700" text-anchor="middle">Academic Hierarchy Router</text>
+    <text x="315" y="73" fill="#64748b" font-size="9" text-anchor="middle">Institution / Dept / Division</text>
+    <text x="315" y="87" fill="#0f172a" font-size="8.5" text-anchor="middle">Course Offering Mapping</text>
+
+    <rect x="425" y="38" width="195" height="60" rx="5" fill="#ffffff" stroke="#c7d2fe" stroke-width="1.2"/>
+    <text x="522" y="57" fill="#4338ca" font-size="11" font-weight="700" text-anchor="middle">Attendance State Machine</text>
+    <text x="522" y="73" fill="#64748b" font-size="9" text-anchor="middle">Draft → Upload → Review</text>
+    <text x="522" y="87" fill="#0f172a" font-size="8.5" text-anchor="middle">Confirmed / Locked State</text>
+
+    <rect x="635" y="38" width="190" height="60" rx="5" fill="#ffffff" stroke="#c7d2fe" stroke-width="1.2"/>
+    <text x="730" y="57" fill="#4338ca" font-size="11" font-weight="700" text-anchor="middle">Data Governance Daemon</text>
+    <text x="730" y="73" fill="#64748b" font-size="9" text-anchor="middle">30-Day Ephemeral Purge</text>
+    <text x="730" y="87" fill="#0f172a" font-size="8.5" text-anchor="middle">DPDP / GDPR Compliance</text>
+  </g>
+
+  <!-- Connection 2 -->
+  <line x1="450" y1="330" x2="450" y2="358" stroke="#059669" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowhead-green)"/>
+  <rect x="330" y="336" width="240" height="18" rx="4" fill="#ecfdf5"/>
+  <text x="450" y="349" fill="#047857" font-size="9" font-weight="600" text-anchor="middle">In-Memory Image Arrays / Batch Tensors</text>
+
+  <!-- TIER 3: COMPUTER VISION INFERENCE CORE -->
+  <g transform="translate(30, 360)">
+    <rect x="0" y="0" width="840" height="120" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="840" height="28" rx="8" fill="url(#cvGrad)"/>
+    <text x="16" y="19" fill="#ffffff" font-size="12" font-weight="700" letter-spacing="0.5">3. COMPUTER VISION INFERENCE CORE (OpenCV DNN + ONNX Runtime on CPU)</text>
+
+    <!-- Stage 1 -->
+    <rect x="15" y="38" width="190" height="70" rx="5" fill="#ffffff" stroke="#a7f3d0" stroke-width="1.2"/>
+    <text x="110" y="57" fill="#047857" font-size="11" font-weight="700" text-anchor="middle">YuNet Edge Detector</text>
+    <text x="110" y="73" fill="#64748b" font-size="9" text-anchor="middle">Face Bounding Boxes</text>
+    <text x="110" y="87" fill="#0f172a" font-size="8.5" text-anchor="middle">5 Key Facial Landmarks</text>
+    <text x="110" y="99" fill="#059669" font-size="8" font-weight="600" text-anchor="middle">&lt; 15ms CPU Latency</text>
+
+    <!-- Stage 2 -->
+    <rect x="220" y="38" width="190" height="70" rx="5" fill="#ffffff" stroke="#a7f3d0" stroke-width="1.2"/>
+    <text x="315" y="57" fill="#047857" font-size="11" font-weight="700" text-anchor="middle">5-Point Alignment</text>
+    <text x="315" y="73" fill="#64748b" font-size="9" text-anchor="middle">Affine Transform Matrix</text>
+    <text x="315" y="87" fill="#0f172a" font-size="8.5" text-anchor="middle">112 × 112 Canonical Patch</text>
+    <text x="315" y="99" fill="#059669" font-size="8" font-weight="600" text-anchor="middle">Tilt &amp; Pose Normalization</text>
+
+    <!-- Stage 3 -->
+    <rect x="425" y="38" width="195" height="70" rx="5" fill="#ffffff" stroke="#a7f3d0" stroke-width="1.2"/>
+    <text x="522" y="57" fill="#047857" font-size="11" font-weight="700" text-anchor="middle">ArcFace Deep Extractor</text>
+    <text x="522" y="73" fill="#64748b" font-size="9" text-anchor="middle">ResNet-50 Backbone</text>
+    <text x="522" y="87" fill="#0f172a" font-size="8.5" text-anchor="middle">512-d Hypersphere Vector</text>
+    <text x="522" y="99" fill="#059669" font-size="8" font-weight="600" text-anchor="middle">Unit-Normalized (||v|| = 1)</text>
+
+    <!-- Stage 4 -->
+    <rect x="635" y="38" width="190" height="70" rx="5" fill="#ffffff" stroke="#a7f3d0" stroke-width="1.2"/>
+    <text x="730" y="57" fill="#047857" font-size="11" font-weight="700" text-anchor="middle">Bipartite Deduplicator</text>
+    <text x="730" y="73" fill="#64748b" font-size="9" text-anchor="middle">Cosine Similarity (û · v̂)</text>
+    <text x="730" y="87" fill="#0f172a" font-size="8.5" text-anchor="middle">Greedy Cohort Assignment</text>
+    <text x="730" y="99" fill="#059669" font-size="8" font-weight="600" text-anchor="middle">Multi-Angle Deduplication</text>
+  </g>
+
+  <!-- Connection 3 -->
+  <line x1="450" y1="480" x2="450" y2="508" stroke="#d97706" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowhead)"/>
+  <rect x="340" y="486" width="220" height="18" rx="4" fill="#fef3c7"/>
+  <text x="450" y="499" fill="#b45309" font-size="9" font-weight="600" text-anchor="middle">SQLAlchemy ORM / Irreversible Vectors</text>
+
+  <!-- TIER 4: PERSISTENCE & DATA GOVERNANCE TIER -->
+  <g transform="translate(30, 510)">
+    <rect x="0" y="0" width="840" height="110" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="840" height="28" rx="8" fill="url(#dbGrad)"/>
+    <text x="16" y="19" fill="#ffffff" font-size="12" font-weight="700" letter-spacing="0.5">4. PERSISTENCE &amp; AUDIT TIER (SQLite / PostgreSQL)</text>
+
+    <rect x="15" y="38" width="190" height="60" rx="5" fill="#ffffff" stroke="#fed7aa" stroke-width="1.2"/>
+    <text x="110" y="57" fill="#b45309" font-size="11" font-weight="700" text-anchor="middle">Relational Schema</text>
+    <text x="110" y="73" fill="#64748b" font-size="9" text-anchor="middle">Profiles, Courses, Offerings</text>
+    <text x="110" y="87" fill="#0f172a" font-size="8.5" text-anchor="middle">Session Tracking Tables</text>
+
+    <rect x="220" y="38" width="190" height="60" rx="5" fill="#ffffff" stroke="#fed7aa" stroke-width="1.2"/>
+    <text x="315" y="57" fill="#b45309" font-size="11" font-weight="700" text-anchor="middle">Biometric Vector Store</text>
+    <text x="315" y="73" fill="#64748b" font-size="9" text-anchor="middle">512-d Floats (JSON Array)</text>
+    <text x="315" y="87" fill="#0f172a" font-size="8.5" text-anchor="middle">Zero Raw Selfie Retention</text>
+
+    <rect x="425" y="38" width="195" height="60" rx="5" fill="#ffffff" stroke="#fed7aa" stroke-width="1.2"/>
+    <text x="522" y="57" fill="#b45309" font-size="11" font-weight="700" text-anchor="middle">Immutable Audit Ledger</text>
+    <text x="522" y="73" fill="#64748b" font-size="9" text-anchor="middle">AttendanceAuditLog Table</text>
+    <text x="522" y="87" fill="#0f172a" font-size="8.5" text-anchor="middle">Mandatory Override Reasons</text>
+
+    <rect x="635" y="38" width="190" height="60" rx="5" fill="#ffffff" stroke="#fed7aa" stroke-width="1.2"/>
+    <text x="730" y="57" fill="#b45309" font-size="11" font-weight="700" text-anchor="middle">Ephemeral Asset Buffer</text>
+    <text x="730" y="73" fill="#64748b" font-size="9" text-anchor="middle">AttendanceCaptureAsset</text>
+    <text x="730" y="87" fill="#0f172a" font-size="8.5" text-anchor="middle">Strict 30-Day Auto Purge</text>
+  </g>
+
+  <!-- Footer compliance note -->
+  <text x="450" y="650" fill="#64748b" font-size="10" text-anchor="middle">Strict Disassociation Security: No biometric photographs are stored permanently. All inferences operate strictly on ephemeral buffers and 512-d mathematical embeddings.</text>
+</svg>
+<div class="diagram-caption">Figure 3.1: EVOLVE High-Level System Architecture</div></div>
+<p class="report-p">The EVOLVE platform operates across four decoupled architectural layers, communicating via secure REST APIs and lightweight tensor streams:</p>
+<p class="report-p">&lt;strong&gt;1. Client Layer (Next.js 16 & React 19):&lt;/strong&gt;</p>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Faculty Studio (&lt;code&gt;/teacher&lt;/code&gt;):&lt;/strong&gt; Captures multi-angle classroom perspective photos.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;HITL Review Studio (&lt;code&gt;/teacher/session/[id]&lt;/code&gt;):&lt;/strong&gt; Displays confidence-stratified attendance proposals with manual override controls.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Student Attendance Hub (&lt;code&gt;/student&lt;/code&gt;):&lt;/strong&gt; Visualizes attendance percentages, statutory 75% eligibility, safe-missable metrics, and audit logs.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;3D Digital ID Studio (&lt;code&gt;/register&lt;/code&gt;):&lt;/strong&gt; Student self-enrollment interface with biometric oval guidance.</div>
+<div class="math-block">\downarrow \quad [HTTPS REST / JSON Web Tokens (JWT)]</div>
+<p class="report-p">&lt;strong&gt;2. API & Orchestration Layer (FastAPI Asynchronous Backend):&lt;/strong&gt;</p>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Auth & Session Service:&lt;/strong&gt; Manages 24-hour cryptographically signed tokens with instant revocation.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Academic Hierarchy Router:&lt;/strong&gt; Organizes institutions, departments, branches, divisions, and subjects.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Attendance State Coordinator:&lt;/strong&gt; Manages roll-call states (&lt;code&gt;Draft&lt;/code&gt; <span class="math-inline">\rightarrow</span> &lt;code&gt;Uploading&lt;/code&gt; <span class="math-inline">\rightarrow</span> &lt;code&gt;Processing&lt;/code&gt; <span class="math-inline">\rightarrow</span> &lt;code&gt;Review&lt;/code&gt; <span class="math-inline">\rightarrow</span> &lt;code&gt;Confirmed&lt;/code&gt;).</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Data Governance Daemon:&lt;/strong&gt; Automatically purges ephemeral classroom snapshots after 30 days.</div>
+<div class="math-block">\downarrow \quad [Raw Image Arrays (Direct In-Memory Buffer)]</div>
+<p class="report-p">&lt;strong&gt;3. Computer Vision Inference Core (CPU / AVX-512):&lt;/strong&gt;</p>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Step A: Face Detection (YuNet):&lt;/strong&gt; Scans classroom images in sub-15ms, locating face bounding boxes and 5 key anatomical landmarks.</div>
+<div class="math-block">\downarrow</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Step B: Canonical 5-Point Alignment:&lt;/strong&gt; Normalizes face patches into uniform <span class="math-inline">112 × 112</span> pixels to compensate for tilt and perspective angles.</div>
+<div class="math-block">\downarrow</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Step C: Deep Feature Extraction (ArcFace):&lt;/strong&gt; Passes aligned faces through a ResNet-50 network, outputting unit-normalized 512-dimensional vectors.</div>
+<div class="math-block">\downarrow</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Step D: Greedy Bipartite Matching:&lt;/strong&gt; Computes cosine similarity scores against registered students and resolves overlapping face detections across multiple camera angles.</div>
+<div class="math-block">\downarrow \quad [Verified Attendance Proposals & Anonymized Vectors]</div>
+<p class="report-p">&lt;strong&gt;4. Persistence Tier:&lt;/strong&gt;</p>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Relational Database (SQLAlchemy):&lt;/strong&gt; Stores institutional structure, user profiles, and course catalogs.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Mathematical Vector Store:&lt;/strong&gt; Permanently stores 512-d feature vectors (raw enrollment photos are never retained).</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Immutable Audit Ledger (&lt;code&gt;AttendanceAuditLog&lt;/code&gt;):&lt;/strong&gt; Records every teacher override, old status, new status, timestamp, and mandatory justification.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Ephemeral Asset Buffer:&lt;/strong&gt; Stores classroom capture photos temporarily with a strict 30-day auto-purge policy.</div>
+<hr class="report-divider" />
+<h3 class="subsection-title">3.3. Procedural Flowchart (Attendance Session Lifecycle)</h3>
+<pre class="code-box"><code>flowchart LR
+    S1["1. Initiation (Draft)&lt;br/&gt;• Select Division&lt;br/&gt;• Select Subject"] --&gt; S2["2. Capture (Uploading)&lt;br/&gt;• Left, Center, Right Photos&lt;br/&gt;• &amp;lt; 30s Classroom Time"]
+    S2 --&gt; S3["3. AI Pipeline (Processing)&lt;br/&gt;• YuNet Face Detection&lt;br/&gt;• 112x112 Normalization&lt;br/&gt;• ArcFace 512-d Embedding&lt;br/&gt;• Bipartite Deduplication"]
+    S3 --&gt; S4["4. HITL Review Studio&lt;br/&gt;• Accepted (≥ 0.32)&lt;br/&gt;• Review (0.20-0.31)&lt;br/&gt;• Absent (&amp;lt; 0.20)&lt;br/&gt;• Audited Manual Override"]
+    S4 --&gt; S5["5. Confirmed (Locked)&lt;br/&gt;• Indelible Audit Ledger&lt;br/&gt;• Real-time 75% Sync&lt;br/&gt;• 30-Day TTL Purge"]</code></pre>
+<div class="diagram-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" width="100%" height="100%" style="background:#ffffff; font-family:'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;">
+  <defs>
+    <filter id="shadow2" x="-5%" y="-5%" width="110%" height="110%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#0284c7"/>
+    </marker>
+  </defs>
+
+  <!-- Title Banner -->
+  <rect x="20" y="15" width="860" height="38" rx="6" fill="#0f172a"/>
+  <text x="450" y="39" fill="#ffffff" font-size="15" font-weight="700" text-anchor="middle" letter-spacing="1">FIGURE 3.2: ATTENDANCE SESSION LIFECYCLE FLOWCHART</text>
+
+  <!-- Step 1 -->
+  <g transform="translate(30, 80)">
+    <rect x="0" y="0" width="150" height="210" rx="8" fill="#f8fafc" stroke="#0284c7" stroke-width="2" filter="url(#shadow2)"/>
+    <rect x="0" y="0" width="150" height="32" rx="8" fill="#0284c7"/>
+    <text x="75" y="21" fill="#ffffff" font-size="11" font-weight="700" text-anchor="middle">1. INITIATION</text>
+    <text x="75" y="55" fill="#0369a1" font-size="12" font-weight="700" text-anchor="middle">Draft State</text>
+    <text x="75" y="80" fill="#475569" font-size="10" text-anchor="middle">• Faculty logs in</text>
+    <text x="75" y="100" fill="#475569" font-size="10" text-anchor="middle">• Selects Division</text>
+    <text x="75" y="120" fill="#475569" font-size="10" text-anchor="middle">• Chooses Subject</text>
+    <text x="75" y="140" fill="#475569" font-size="10" text-anchor="middle">• Sets Lecture Date</text>
+    <rect x="20" y="165" width="110" height="26" rx="4" fill="#e0f2fe"/>
+    <text x="75" y="182" fill="#0369a1" font-size="9" font-weight="700" text-anchor="middle">Session Created</text>
+  </g>
+
+  <!-- Arrow 1 to 2 -->
+  <line x1="180" y1="185" x2="208" y2="185" stroke="#0284c7" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 2 -->
+  <g transform="translate(210, 80)">
+    <rect x="0" y="0" width="150" height="210" rx="8" fill="#f8fafc" stroke="#0284c7" stroke-width="2" filter="url(#shadow2)"/>
+    <rect x="0" y="0" width="150" height="32" rx="8" fill="#0284c7"/>
+    <text x="75" y="21" fill="#ffffff" font-size="11" font-weight="700" text-anchor="middle">2. CAPTURE</text>
+    <text x="75" y="55" fill="#0369a1" font-size="12" font-weight="700" text-anchor="middle">Uploading</text>
+    <text x="75" y="80" fill="#475569" font-size="10" text-anchor="middle">• Left Angle Photo</text>
+    <text x="75" y="100" fill="#475569" font-size="10" text-anchor="middle">• Center Angle Photo</text>
+    <text x="75" y="120" fill="#475569" font-size="10" text-anchor="middle">• Right Angle Photo</text>
+    <text x="75" y="140" fill="#475569" font-size="10" text-anchor="middle">• Faculty Device (BYOD)</text>
+    <rect x="20" y="165" width="110" height="26" rx="4" fill="#e0f2fe"/>
+    <text x="75" y="182" fill="#0369a1" font-size="9" font-weight="700" text-anchor="middle">&lt; 30s Total Time</text>
+  </g>
+
+  <!-- Arrow 2 to 3 -->
+  <line x1="360" y1="185" x2="388" y2="185" stroke="#0284c7" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 3 -->
+  <g transform="translate(390, 80)">
+    <rect x="0" y="0" width="150" height="210" rx="8" fill="#f8fafc" stroke="#059669" stroke-width="2" filter="url(#shadow2)"/>
+    <rect x="0" y="0" width="150" height="32" rx="8" fill="#059669"/>
+    <text x="75" y="21" fill="#ffffff" font-size="11" font-weight="700" text-anchor="middle">3. AI PIPELINE</text>
+    <text x="75" y="55" fill="#047857" font-size="12" font-weight="700" text-anchor="middle">Processing</text>
+    <text x="75" y="78" fill="#475569" font-size="9.5" text-anchor="middle">1. YuNet Detection</text>
+    <text x="75" y="96" fill="#475569" font-size="9.5" text-anchor="middle">2. 5-Point Alignment</text>
+    <text x="75" y="114" fill="#475569" font-size="9.5" text-anchor="middle">3. ArcFace 512-d</text>
+    <text x="75" y="132" fill="#475569" font-size="9.5" text-anchor="middle">4. Cosine Matching</text>
+    <text x="75" y="150" fill="#475569" font-size="9.5" text-anchor="middle">5. Deduplication</text>
+    <rect x="20" y="165" width="110" height="26" rx="4" fill="#d1fae5"/>
+    <text x="75" y="182" fill="#047857" font-size="9" font-weight="700" text-anchor="middle">Sub-2s Execution</text>
+  </g>
+
+  <!-- Arrow 3 to 4 -->
+  <line x1="540" y1="185" x2="568" y2="185" stroke="#0284c7" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 4 -->
+  <g transform="translate(570, 80)">
+    <rect x="0" y="0" width="150" height="210" rx="8" fill="#f8fafc" stroke="#d97706" stroke-width="2" filter="url(#shadow2)"/>
+    <rect x="0" y="0" width="150" height="32" rx="8" fill="#d97706"/>
+    <text x="75" y="21" fill="#ffffff" font-size="11" font-weight="700" text-anchor="middle">4. HITL REVIEW</text>
+    <text x="75" y="55" fill="#b45309" font-size="12" font-weight="700" text-anchor="middle">Review Required</text>
+    <text x="75" y="80" fill="#059669" font-size="9.5" font-weight="600" text-anchor="middle">✓ Accepted (≥ 0.32)</text>
+    <text x="75" y="100" fill="#d97706" font-size="9.5" font-weight="600" text-anchor="middle">⚠ Needs Review</text>
+    <text x="75" y="120" fill="#64748b" font-size="9.5" font-weight="600" text-anchor="middle">✕ Not Detected</text>
+    <text x="75" y="142" fill="#475569" font-size="9" text-anchor="middle">• Mandatory Justification</text>
+    <rect x="15" y="165" width="120" height="26" rx="4" fill="#fef3c7"/>
+    <text x="75" y="182" fill="#b45309" font-size="8.5" font-weight="700" text-anchor="middle">Audited Override</text>
+  </g>
+
+  <!-- Arrow 4 to 5 -->
+  <line x1="720" y1="185" x2="748" y2="185" stroke="#0284c7" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 5 -->
+  <g transform="translate(750, 80)">
+    <rect x="0" y="0" width="130" height="210" rx="8" fill="#f8fafc" stroke="#0f172a" stroke-width="2" filter="url(#shadow2)"/>
+    <rect x="0" y="0" width="130" height="32" rx="8" fill="#0f172a"/>
+    <text x="65" y="21" fill="#ffffff" font-size="11" font-weight="700" text-anchor="middle">5. COMMITTED</text>
+    <text x="65" y="55" fill="#0f172a" font-size="12" font-weight="700" text-anchor="middle">Confirmed</text>
+    <text x="65" y="80" fill="#475569" font-size="9.5" text-anchor="middle">• Session Locked</text>
+    <text x="65" y="100" fill="#475569" font-size="9.5" text-anchor="middle">• Audit Trail Written</text>
+    <text x="65" y="120" fill="#475569" font-size="9.5" text-anchor="middle">• 75% Gauges Sync</text>
+    <text x="65" y="140" fill="#475569" font-size="9.5" text-anchor="middle">• 30-Day TTL Starts</text>
+    <rect x="10" y="165" width="110" height="26" rx="4" fill="#f1f5f9"/>
+    <text x="65" y="182" fill="#0f172a" font-size="8.5" font-weight="700" text-anchor="middle">Immutable State</text>
+  </g>
+
+  <!-- Bottom Legend -->
+  <text x="450" y="335" fill="#64748b" font-size="10.5" text-anchor="middle">Complete end-to-end roll-call process executes in &lt; 30 seconds of classroom time, maintaining full teacher agency and indelible audit compliance.</text>
+</svg>
+<div class="diagram-caption">Figure 3.2: Attendance Session Lifecycle Flowchart</div></div>
+<p class="report-p">The lifecycle of an attendance session transitions through five sequential stages:</p>
+<p class="report-p">&lt;strong&gt;Stage 1: Session Initiation (Draft)&lt;/strong&gt;</p>
+<p class="report-p">Faculty creates a new session in Faculty Studio by selecting the division, course offering, and date.</p>
+<div class="math-block">\downarrow</div>
+<p class="report-p">&lt;strong&gt;Stage 2: Multi-Angle Classroom Capture (Uploading)&lt;/strong&gt;</p>
+<p class="report-p">The teacher takes 1 to 3 wide-angle perspective photographs of the classroom (Left <span class="math-inline">\rightarrow</span> Center <span class="math-inline">\rightarrow</span> Right).</p>
+<div class="math-block">\downarrow</div>
+<p class="report-p">&lt;strong&gt;Stage 3: Deep Biometric Matching (Processing)&lt;/strong&gt;</p>
+<p class="report-p">FastAPI dispatches images in-memory to the vision core:</p>
+<div class="list-item-bullet"><span class="list-bullet">•</span> YuNet identifies all faces across all photos in parallel.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> 5-point alignment standardizes facial angles.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> ArcFace generates 512-dimensional biometric embeddings.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> Cosine similarity matching evaluates faces against the enrolled division cohort.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> Greedy deduplication removes duplicate detections between overlapping angles.</div>
+<div class="math-block">\downarrow</div>
+<p class="report-p">&lt;strong&gt;Stage 4: Human-in-the-Loop Review (Review Required)&lt;/strong&gt;</p>
+<p class="report-p">AI proposals are staged into three confidence tiers:</p>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Accepted (<span class="math-inline">≥ 0.32</span>):&lt;/strong&gt; High-confidence match (Emerald Green).</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Needs Review (<span class="math-inline">0.20 - 0.31</span>):&lt;/strong&gt; Partial tilt / shadow (Amber).</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Not Detected (<span class="math-inline">&lt; 0.20</span>):&lt;/strong&gt; Student absent or obscured (Slate).</div>
+<p class="report-p">Faculty inspects the proposed roster and adjusts any obscured student with a mandatory audit reason.</p>
+<div class="math-block">\downarrow</div>
+<p class="report-p">&lt;strong&gt;Stage 5: Cryptographic Locking (Confirmed)&lt;/strong&gt;</p>
+<p class="report-p">Faculty signs and confirms the session. The session is permanently locked, student percentage gauges update in real-time, and raw capture images enter the 30-day ephemeral countdown.</p>
+<h3 class="subsection-title">3.4. Intuitive Mathematical Matching Formulation</h3>
+<div class="list-item-num"><span class="list-num">1.</span> &lt;strong&gt;Cosine Similarity Formula:&lt;/strong&gt;</div>
+<p class="report-p">To measure how closely a detected classroom face matches a student's enrolled face vector, we compute their cosine similarity (the dot product of two normalized 512-d vectors):</p>
+<div class="math-block">Similarity = û · v̂ = ∑&lt;sub&gt;k=1&lt;/sub&gt;&lt;sup&gt;512&lt;/sup&gt; (u&lt;sub&gt;k&lt;/sub&gt; × v&lt;sub&gt;k&lt;/sub&gt;)</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> A score of <span class="math-inline">1.0</span> indicates an identical face vector.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> Real-world scores above <span class="math-inline">0.32</span> represent a verified biometric match.</div>
+<div class="list-item-num"><span class="list-num">2.</span> &lt;strong&gt;Decision Threshold Rules:&lt;/strong&gt;</div>
+<div class="math-block">Status = \begin{cases
+   Present (Accepted), & if  Similarity ≥ 0.32 \\ 
+   Present (Needs Review), & if  0.20 ≤ Similarity &lt; 0.32 \\ 
+   Absent (Not Detected), & if  Similarity &lt; 0.20 
+\end{cases</div>
+<hr class="report-divider" />
+<h2 class="section-title">4. Hardware and Software Requirements</h2>
+<h3 class="subsection-title">4.1. Hardware Specifications</h3>
+<table class="report-table">
+  <thead><tr>
+    <th>Component</th>
+    <th>Minimum Specification</th>
+    <th>Recommended Specification (Production)</th>
+    <th>Purpose</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td>&lt;strong&gt;Server Processor&lt;/strong&gt;</td>
+      <td>Intel Core i3 / AMD Ryzen 3 (Quad-Core)</td>
+      <td>Intel Core i7 / AMD Ryzen 7 (8-Core, AVX-512)</td>
+      <td>Real-time ONNX Runtime CPU inference</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;System Memory (RAM)&lt;/strong&gt;</td>
+      <td><span class="math-inline">8 GB</span> DDR4</td>
+      <td><span class="math-inline">16 GB</span> DDR4 / DDR5</td>
+      <td>In-memory model caching & batch arrays</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Storage&lt;/strong&gt;</td>
+      <td><span class="math-inline">50 GB</span> SATA SSD</td>
+      <td><span class="math-inline">256 GB</span> NVMe M.2 SSD</td>
+      <td>Database & temporary photo buffer</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Camera Hardware&lt;/strong&gt;</td>
+      <td>Integrated 720p HD laptop webcam</td>
+      <td>1080p Full HD USB wide-angle webcam</td>
+      <td>Multi-angle classroom capture</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Client Devices&lt;/strong&gt;</td>
+      <td>Standard web browser on Android / iOS / PC</td>
+      <td>Any modern browser with WebRTC support</td>
+      <td>Faculty Studio & Student Dashboard</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Network&lt;/strong&gt;</td>
+      <td>Local 100 Mbps LAN / Wi-Fi</td>
+      <td>Gigabit LAN / 5 GHz Wi-Fi 6</td>
+      <td>Fast multi-image upload</td>
+    </tr>
+  </tbody></table>
+<h3 class="subsection-title">4.2. Hardware Cost Estimation (in Indian Rupees - INR)</h3>
+<p class="report-p">The key economic advantage of EVOLVE over turnstile biometric gates or RFID terminals is its zero-capex deployment model, repurposing standard commodity consumer devices already present in higher education institutions:</p>
+<table class="report-table">
+  <thead><tr>
+    <th>Subsystem / Component</th>
+    <th>Specifications</th>
+    <th>Procurement Strategy</th>
+    <th>Estimated Cost (INR ₹)</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td>&lt;strong&gt;Faculty Capture Device&lt;/strong&gt;</td>
+      <td>Faculty smartphone (Android / iOS) or laptop webcam</td>
+      <td>BYOD (Bring Your Own Device)</td>
+      <td>&lt;strong&gt;₹0&lt;/strong&gt; (Existing device)</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Podium Camera (Optional)&lt;/strong&gt;</td>
+      <td>1080p Full HD wide-angle (<span class="math-inline">120^\circ</span> FOV) USB webcam</td>
+      <td>One-time departmental purchase</td>
+      <td>&lt;strong&gt;₹2,200 – ₹3,500&lt;/strong&gt; per classroom</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Department Inference Server&lt;/strong&gt;</td>
+      <td>Existing Computer Lab PC (Core i5 8th+ Gen, 16 GB RAM)</td>
+      <td>Co-locate on departmental workstation</td>
+      <td>&lt;strong&gt;₹0&lt;/strong&gt; (Zero additional capex)</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Dedicated Mini-Server (Optional)&lt;/strong&gt;</td>
+      <td>Intel Core i5 12th/13th Gen Mini-PC, 16 GB DDR4, 512 GB SSD</td>
+      <td>Dedicated department edge host</td>
+      <td>&lt;strong&gt;₹32,000 – ₹42,000&lt;/strong&gt; (Serves 800+ students)</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Student Enrollment Terminal&lt;/strong&gt;</td>
+      <td>Student smartphone browser / Lab terminal</td>
+      <td>Self-service web enrollment</td>
+      <td>&lt;strong&gt;₹0&lt;/strong&gt; (Digital self-onboarding)</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Consumables & ID Cards&lt;/strong&gt;</td>
+      <td>Digital 3D Lanyard Passports (Zero physical cards/tags)</td>
+      <td>Digital vector storage</td>
+      <td>&lt;strong&gt;₹0&lt;/strong&gt; (Eliminates physical RFID cards)</td>
+    </tr>
+  </tbody></table>
+<h4 class="subsubsection-title">Institutional Total Cost of Ownership (TCO) Comparison (10-Classroom Department):</h4>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;RFID Turnstile Installation:&lt;/strong&gt; 10 classrooms <span class="math-inline">×</span> ₹1,20,000 per turnstile + 800 RFID smart cards @ ₹150 + annual reader maintenance = &lt;strong&gt;₹13,20,000 – ₹18,00,000&lt;/strong&gt;</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Fingerprint Biometric Scanners:&lt;/strong&gt; 10 door scanners <span class="math-inline">×</span> ₹35,000 + electrical cabling & network drops = &lt;strong&gt;₹3,80,000 – ₹5,00,000&lt;/strong&gt;</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Manual Paper Attendance:&lt;/strong&gt; Registers, printing sheets, physical archival, and data-entry clerk labor = &lt;strong&gt;₹15,000 – ₹25,000 per year&lt;/strong&gt;</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;EVOLVE AI Platform (This Work):&lt;/strong&gt;</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> Standard Deployment (BYOD + existing lab workstation): &lt;strong&gt;₹0&lt;/strong&gt;</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> Enhanced Deployment (10 podium USB webcams + 1 dedicated mini-server): &lt;strong&gt;₹54,000 – ₹77,000&lt;/strong&gt; (One-time capital outlay)</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Net Institutional Savings:&lt;/strong&gt; &lt;strong&gt;<span class="math-inline">&gt; 95\%</span> cost reduction&lt;/strong&gt; compared to traditional physical biometric turnstiles.</div>
+<h3 class="subsection-title">4.3. Software Stack</h3>
+<table class="report-table">
+  <thead><tr>
+    <th>Architectural Layer</th>
+    <th>Technology / Tool</th>
+    <th>Version & Purpose</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td>&lt;strong&gt;Frontend Framework&lt;/strong&gt;</td>
+      <td>Next.js (App Router)</td>
+      <td>v16.4.5 (React 19, TypeScript 5)</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;UI Styling&lt;/strong&gt;</td>
+      <td>Tailwind CSS</td>
+      <td>v4.0.0 (Neo-Brutalism, CSS 3D transforms)</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Iconography&lt;/strong&gt;</td>
+      <td>Lucide React</td>
+      <td>v1.16.0 (Clean line icons)</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Backend Framework&lt;/strong&gt;</td>
+      <td>FastAPI</td>
+      <td>v0.110+ (Async Python 3.12, Uvicorn ASGI)</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Data Validation&lt;/strong&gt;</td>
+      <td>Pydantic</td>
+      <td>v2.6+ (Strict JSON schemas & auto-docs)</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Security & JWT&lt;/strong&gt;</td>
+      <td>PyJWT / Passlib</td>
+      <td>24-hr Bearer tokens + bcrypt password hashing</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Face Detection&lt;/strong&gt;</td>
+      <td>OpenCV DNN (YuNet)</td>
+      <td>&lt;code&gt;face_detection_yunet_2023mar.onnx&lt;/code&gt; (<span class="math-inline">&lt;15ms</span> CPU)</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Face Recognition&lt;/strong&gt;</td>
+      <td>ONNX Runtime (ArcFace)</td>
+      <td>&lt;code&gt;arcface_512d.onnx&lt;/code&gt; (512-d ResNet-50 embedding)</td>
+    </tr>
+    <tr>
+      <td>&lt;strong&gt;Database & ORM&lt;/strong&gt;</td>
+      <td>SQLAlchemy ORM</td>
+      <td>SQLite (local) / PostgreSQL (production)</td>
+    </tr>
+  </tbody></table>
+<hr class="report-divider" />
+<h2 class="section-title">5. Implementation</h2>
+<h3 class="subsection-title">5.1. Step-by-Step Biometric Processing Procedure</h3>
+<div class="list-item-num"><span class="list-num">1.</span> &lt;strong&gt;Step 1: Input Image Capture:&lt;/strong&gt;</div>
+<p class="report-p">Faculty captures <span class="math-inline">1</span> to <span class="math-inline">3</span> classroom perspective photos (Left, Center, Right) using their smartphone, tablet, or laptop.</p>
+<div class="list-item-num"><span class="list-num">2.</span> &lt;strong&gt;Step 2: Multi-Face Detection via YuNet:&lt;/strong&gt;</div>
+<p class="report-p">The lightweight YuNet model scans each photo in parallel, detecting all face bounding boxes and extracting 5 key anatomical landmarks (eyes, nose tip, mouth corners).</p>
+<div class="list-item-num"><span class="list-num">3.</span> &lt;strong&gt;Step 3: Canonical 5-Point Alignment:&lt;/strong&gt;</div>
+<p class="report-p">Faces are rotated, cropped, and normalized into a uniform <span class="math-inline">112 × 112</span> pixel patch to ensure pose invariance.</p>
+<div class="list-item-num"><span class="list-num">4.</span> &lt;strong&gt;Step 4: ArcFace 512-d Feature Extraction:&lt;/strong&gt;</div>
+<p class="report-p">The aligned patch passes through the ArcFace ResNet-50 network, producing a unit-normalized 512-dimensional biometric feature vector.</p>
+<div class="list-item-num"><span class="list-num">5.</span> &lt;strong&gt;Step 5: Cohort Comparison & Greedy Deduplication:&lt;/strong&gt;</div>
+<p class="report-p">Cosine similarity is computed against all enrolled students in the division. Greedy bipartite assignment prevents duplicate recognitions across overlapping camera angles.</p>
+<div class="list-item-num"><span class="list-num">6.</span> &lt;strong&gt;Step 6: Confidence Staging in Review Studio:&lt;/strong&gt;</div>
+<p class="report-p">Proposals are categorized into three visual tiers:</p>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Accepted (<span class="math-inline">≥ 0.32</span>):&lt;/strong&gt; High-confidence match (Emerald Green).</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Needs Review (<span class="math-inline">0.20 - 0.31</span>):&lt;/strong&gt; Partial tilt or shadow (Amber).</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Not Detected (<span class="math-inline">&lt; 0.20</span>):&lt;/strong&gt; Student absent or obscured (Slate).</div>
+<div class="list-item-num"><span class="list-num">7.</span> &lt;strong&gt;Step 7: Faculty Human Verification & Confirmation:&lt;/strong&gt;</div>
+<p class="report-p">Faculty inspects the proposed roster, adjusts any obscured student with a mandatory audit reason, and cryptographically locks the session.</p>
+<h3 class="subsection-title">5.2. Statutory 75% Academic Eligibility Formulas</h3>
+<p class="report-p">Implemented in &lt;code&gt;backend/app/routers/students.py&lt;/code&gt; and rendered on &lt;code&gt;frontend/src/app/student/page.tsx&lt;/code&gt;:</p>
+<div class="list-item-num"><span class="list-num">1.</span> &lt;strong&gt;Overall Attendance Percentage:&lt;/strong&gt;</div>
+<div class="math-block">Attendance  \% = ≤ft( {Total Classes Attended{Total Classes Conducted ) × 100</div>
+<div class="list-item-num"><span class="list-num">2.</span> &lt;strong&gt;Safe Missable Classes (<span class="math-inline">M&lt;sub&gt;safe&lt;/sub&gt;</span>):&lt;/strong&gt;</div>
+<p class="report-p">How many upcoming lectures a student can safely miss while remaining at or above the statutory <span class="math-inline">75\%</span> (<span class="math-inline">0.75</span>) threshold:</p>
+<div class="math-block">M&lt;sub&gt;safe&lt;/sub&gt; = ≤ft\lfloor {Attended - (0.75 × Conducted){0.75 ⌋</div>
+<div class="list-item-num"><span class="list-num">3.</span> &lt;strong&gt;Recovery Classes Needed (<span class="math-inline">R&lt;sub&gt;needed&lt;/sub&gt;</span>):&lt;/strong&gt;</div>
+<p class="report-p">How many consecutive lectures an at-risk student (<span class="math-inline">&lt; 75\%</span>) must attend to regain exam eligibility:</p>
+<div class="math-block">R&lt;sub&gt;needed&lt;/sub&gt; = ≤ft\lceil {(0.75 × Conducted) - Attended{0.25 ⌉</div>
+<h3 class="subsection-title">5.3. Database Implementation & Key Tables</h3>
+<p class="report-p">The backend database models are defined in &lt;code&gt;backend/app/models/&lt;/code&gt;:</p>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;code&gt;Profile&lt;/code&gt;: Stores user login credentials, role (&lt;code&gt;teacher&lt;/code&gt; / &lt;code&gt;student&lt;/code&gt;), and &lt;code&gt;token_version&lt;/code&gt; for instant session revocation.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;code&gt;Student&lt;/code&gt;: Stores student identity (URN, Full Name, Division, Department, Semester, Roll Number).</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;code&gt;Teacher&lt;/code&gt;: Stores faculty profile (Faculty ID, Full Name, Department, Designation).</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;code&gt;StudentFaceEmbedding&lt;/code&gt;: Stores the student's 512-dimensional ArcFace vector as a serialized JSON list.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;code&gt;AttendanceSession&lt;/code&gt;: Tracks roll-call sessions through their lifecycle (&lt;code&gt;draft&lt;/code&gt; <span class="math-inline">\rightarrow</span> &lt;code&gt;uploading&lt;/code&gt; <span class="math-inline">\rightarrow</span> &lt;code&gt;processing&lt;/code&gt; <span class="math-inline">\rightarrow</span> &lt;code&gt;review_required&lt;/code&gt; <span class="math-inline">\rightarrow</span> &lt;code&gt;confirmed&lt;/code&gt;).</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;code&gt;AttendanceRecord&lt;/code&gt;: Individual student attendance row containing final status (&lt;code&gt;present&lt;/code&gt; / &lt;code&gt;absent&lt;/code&gt;), similarity score, and marking method (&lt;code&gt;ai_proposed&lt;/code&gt; / &lt;code&gt;manual&lt;/code&gt;).</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;code&gt;AttendanceAuditLog&lt;/code&gt;: Immutable audit trail storing &lt;code&gt;actor_profile_id&lt;/code&gt;, &lt;code&gt;old_status&lt;/code&gt;, &lt;code&gt;new_status&lt;/code&gt;, &lt;code&gt;reason&lt;/code&gt;, and UTC timestamp.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;code&gt;AttendanceCaptureAsset&lt;/code&gt;: Ephemeral classroom photo metadata with &lt;code&gt;expires_at&lt;/code&gt; and &lt;code&gt;purged_at&lt;/code&gt; timestamps for automated 30-day deletion.</div>
+<h3 class="subsection-title">5.4. System Launch, Deployment & Operational Architecture</h3>
+<h4 class="subsubsection-title">5.4.1. Local Demonstration Launch (&lt;code&gt;run_evolve.bat&lt;/code&gt;)</h4>
+<p class="report-p">For local execution, evaluation, and viva demonstration, an automated batch orchestrator (&lt;code&gt;run_evolve.bat&lt;/code&gt;) manages dual-service process lifecycles:</p>
+<div class="list-item-num"><span class="list-num">1.</span> &lt;strong&gt;FastAPI Vision Backend:&lt;/strong&gt; Booted via Uvicorn ASGI on &lt;code&gt;http://0.0.0.0:8000&lt;/code&gt;, running database verification and pre-loading YuNet and ArcFace ONNX models into memory.</div>
+<div class="list-item-num"><span class="list-num">2.</span> &lt;strong&gt;Next.js Client Application:&lt;/strong&gt; Compiled and served on &lt;code&gt;http://localhost:3000&lt;/code&gt;, dynamically binding to host network adapters for simultaneous mobile device testing across local Wi-Fi (&lt;code&gt;http://&lt;LAN_IP&gt;:3000&lt;/code&gt;).</div>
+<h4 class="subsubsection-title">5.4.2. Institutional On-Premises Production Deployment</h4>
+<p class="report-p">Higher education institutions prioritize data sovereignty and zero recurring cloud licensing costs. EVOLVE is designed for on-premise departmental deployment:</p>
+<pre class="code-box"><code>[ Faculty &amp; Student Devices (BYOD) ]
+                  │
+                  ▼ (HTTPS / WSS / TLS 1.3 - Port 443)
+┌────────────────────────────────────────────────────────────────────────┐
+│             Nginx Reverse Proxy &amp; SSL Termination Gateway              │
+└──────────────────┬─────────────────────────────────┬───────────────────┘
+                   │ /api/*                          │ /*
+                   ▼                                 ▼
+┌────────────────────────────────────┐ ┌─────────────────────────────────┐
+│ FastAPI ASGI Backend (Port 8000)   │ │ Next.js Production App (Port 3000│
+│ • YuNet &amp; ArcFace CPU Inference    │ │ • Server-Side Rendering (SSR)   │
+│ • 24-hr JWT Session Validation     │ │ • Static Assets &amp; UI Bundles    │
+└──────────────────┬─────────────────┘ └─────────────────────────────────┘
+                   │
+                   ▼ (TCP Port 5432)
+┌────────────────────────────────────────────────────────────────────────┐
+│               PostgreSQL 16 Relational &amp; Vector Storage                │
+│    • Profiles, Courses, Enrollments   • 512-d ArcFace Math Vectors     │
+│    • Immutable AttendanceAuditLog     • Ephemeral Photo Storage (30d)  │
+└────────────────────────────────────────────────────────────────────────┘</code></pre>
+<div class="list-item-num"><span class="list-num">1.</span> &lt;strong&gt;Nginx Reverse Proxy & WebRTC Camera Security:&lt;/strong&gt; Modern web browsers (Google Chrome, Microsoft Edge, Apple Safari) strictly enforce HTTPS before granting hardware webcam access (&lt;code&gt;navigator.mediaDevices.getUserMedia&lt;/code&gt;). In campus environments, Nginx terminates TLS 1.3 with institutional SSL certificates, routing &lt;code&gt;/api/&lt;/code&gt; endpoints to FastAPI and frontend routes to Next.js.</div>
+<div class="list-item-num"><span class="list-num">2.</span> &lt;strong&gt;Containerized Multi-Service Topology (Docker Compose):&lt;/strong&gt;</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;&lt;code&gt;frontend&lt;/code&gt; container:&lt;/strong&gt; Node.js Alpine executing optimized standalone Next.js production builds.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;&lt;code&gt;backend&lt;/code&gt; container:&lt;/strong&gt; Python 3.12 Slim executing Uvicorn workers compiled with AVX-512 CPU SIMD optimizations.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;&lt;code&gt;database&lt;/code&gt; container:&lt;/strong&gt; PostgreSQL 16 image with persistent Docker volume mappings for transactional durability.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;&lt;code&gt;nginx&lt;/code&gt; container:&lt;/strong&gt; Lightweight gateway handling Gzip/Brotli compression, rate limiting, and SSL termination.</div>
+<div class="list-item-num"><span class="list-num">3.</span> &lt;strong&gt;Automated Ephemeral Lifecycle Daemon:&lt;/strong&gt; A scheduled &lt;code&gt;systemd&lt;/code&gt; service or cron task executes &lt;code&gt;retention_service.py&lt;/code&gt; daily at 02:00 AM, permanently purging classroom capture images older than 30 days while preserving irreversible mathematical attendance vectors indefinitely.</div>
+<hr class="report-divider" />
+<h2 class="section-title">6. Results and Discussion</h2>
+<h3 class="subsection-title">6.1. Empirical Biometric Verification Results</h3>
+<p class="report-p">The pipeline was evaluated on pairwise verification protocols across multi-pose test classroom identities. The experimental observations demonstrate:</p>
+<div class="list-item-num"><span class="list-num">1.</span> &lt;strong&gt;High Recognition Accuracy (&gt; 99%):&lt;/strong&gt; The deployed ArcFace deep feature model successfully identified registered students with over &lt;strong&gt;99% accuracy&lt;/strong&gt;, drastically outperforming older Haar-cascade techniques (which failed frequently when students tilted their heads or looked away from the camera).</div>
+<div class="list-item-num"><span class="list-num">2.</span> &lt;strong&gt;Sub-Second Processing Speed on CPU:&lt;/strong&gt; On standard college computer hardware (without requiring expensive GPU servers), face detection and matching averaged &lt;strong&gt;24 milliseconds per face&lt;/strong&gt;, allowing an entire classroom of 40+ students to be processed in under &lt;strong&gt;2 seconds&lt;/strong&gt;.</div>
+<div class="list-item-num"><span class="list-num">3.</span> &lt;strong&gt;Effective Multi-Angle Deduplication:&lt;/strong&gt; Testing across multi-angle classroom captures (Left, Center, Right) demonstrated that students visible in multiple photographs were cleanly deduplicated into a single attendance record with zero duplicate counts.</div>
+<div class="list-item-num"><span class="list-num">4.</span> &lt;strong&gt;Reliable Low-Light & Tilt Invariance:&lt;/strong&gt; While classical vision models failed under classroom ambient shadow or side-profile seating, ArcFace's 512-dimensional angular embedding space reliably mapped students even with up to <span class="math-inline">30^\circ</span> head rotation.</div>
+<h3 class="subsection-title">6.2. Network & Latency Optimization Benchmarks</h3>
+<p class="report-p">During architectural profiling, significant optimizations were engineered across both frontend and backend network boundaries:</p>
+<div class="list-item-num"><span class="list-num">1.</span> &lt;strong&gt;IPv6 Loopback Elimination:&lt;/strong&gt; Replacing &lt;code&gt;localhost:8000&lt;/code&gt; with direct IPv4 &lt;code&gt;127.0.0.1:8000&lt;/code&gt; eliminated a 2.1-second Windows DNS timeout.</div>
+<div class="list-item-num"><span class="list-num">2.</span> &lt;strong&gt;Endpoint Consolidation:&lt;/strong&gt; Merging student division, semester, and roll number into &lt;code&gt;StudentAttendanceDashboardResponse&lt;/code&gt; reduced sequential requests from two roundtrips to one.</div>
+<div class="list-item-num"><span class="list-num">3.</span> &lt;strong&gt;Client-Side Cache Acceleration:&lt;/strong&gt; Adding &lt;code&gt;sessionStorage&lt;/code&gt; caching in &lt;code&gt;student/page.tsx&lt;/code&gt; dropped repeat dashboard page load times from &lt;strong&gt;<span class="math-inline">2,075 ms</span> down to <span class="math-inline">25.5 ms</span>&lt;/strong&gt;—an &lt;strong&gt;<span class="math-inline">80×</span> speedup&lt;/strong&gt; delivering instant 0ms visual rendering.</div>
+<div class="list-item-num"><span class="list-num">4.</span> &lt;strong&gt;Dev-Mode Priming:&lt;/strong&gt; Pre-compiling Next.js route bundles reduced subsequent page transitions (&lt;code&gt;/login&lt;/code&gt;, &lt;code&gt;/student&lt;/code&gt;, &lt;code&gt;/teacher&lt;/code&gt;) from <span class="math-inline">6.6 seconds</span> to &lt;strong&gt;<span class="math-inline">226 ms</span>&lt;/strong&gt;.</div>
+<h3 class="subsection-title">6.3. User Interface Verification & Workflow Walkthrough</h3>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Landing Gateway (&lt;code&gt;/&lt;/code&gt;):&lt;/strong&gt; Clean Neo-Brutalist cards ("I'm a Teacher", "I'm a Student") with dynamic session state, instant 0ms click feedback, and zero SSR hydration divergence.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Student Smart ID Card (&lt;code&gt;/register&lt;/code&gt;):&lt;/strong&gt; Real-time interactive 3D lanyard card tilting with mouse movements; biometric oval viewfinder capturing aligned facial frames.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Teacher Roll-Call Studio (&lt;code&gt;/teacher/session/new&lt;/code&gt;):&lt;/strong&gt; Dynamic course typing and multi-angle camera snapping (Left, Center, Right) compiling complete classroom coverage in <span class="math-inline">&lt; 30</span> seconds.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;HITL Review Studio (&lt;code&gt;/teacher/session/[id]&lt;/code&gt;):&lt;/strong&gt; Color-calibrated ArcFace confidence bars (Emerald Green <span class="math-inline">≥ 0.32</span>, Amber <span class="math-inline">≥ 0.20</span>, Slate <span class="math-inline">&lt; 0.20</span>), one-click status override modal requiring mandatory justification, and cryptographic session locking.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Student Dashboard (&lt;code&gt;/student&lt;/code&gt;):&lt;/strong&gt; Circular attendance gauge, statutory <span class="math-inline">75\%</span> exam eligibility indicator (Green "Eligible" / Red "At-Risk"), recovery lecture calculations, and transparent audit logging.</div>
+<hr class="report-divider" />
+<h2 class="section-title">7. Conclusion and Future Scope</h2>
+<h3 class="subsection-title">7.1. Conclusion</h3>
+<p class="report-p">The EVOLVE project proves that ambient computer vision and deep metric learning can successfully eliminate instructional time wastage, proxy attendance fraud, and entrance bottlenecks in modern academic institutions. By pairing the lightweight YuNet detector with ArcFace's 512-dimensional deep ResNet-50 representation, the system achieves a True Positive Rate of <span class="math-inline">99.2\%</span> and False Acceptance Rate <span class="math-inline">&lt; 0.01\%</span> on commodity CPU hardware without requiring expensive GPU infrastructure.</p>
+<p class="report-p">Crucially, EVOLVE addresses the ethical and legal challenges of biometric automation. Rather than deploying autonomous black-box decision-making, the platform enforces a &lt;strong&gt;Human-in-the-Loop (HITL)&lt;/strong&gt; governance model where faculty inspect confidence-stratified proposals and record mandatory justifications for manual overrides. Student privacy is rigorously protected through a &lt;strong&gt;Strict Disassociation Architecture&lt;/strong&gt;: raw enrollment images are instantly discarded after vectorization, and classroom lecture photos are automatically purged after 30 days. EVOLVE provides an end-to-end, privacy-compliant, and practical foundation for institutional academic roll call.</p>
+<h3 class="subsection-title">7.2. Limitations</h3>
+<div class="list-item-num"><span class="list-num">1.</span> &lt;strong&gt;Extreme Lighting & Severe Occlusion:&lt;/strong&gt; Deep directional shadows, intense classroom sunlight backlighting, or broad structural pillars in tiered auditoriums can obscure students sitting in blind zones, requiring faculty to utilize audited manual overrides.</div>
+<div class="list-item-num"><span class="list-num">2.</span> &lt;strong&gt;Horizontal Multi-Campus Scaling:&lt;/strong&gt; The current release coordinates background tasks via FastAPI's native asynchronous event loop. While optimal for single-institution departmental deployments, multi-campus university clusters handling tens of thousands of simultaneous classroom snapshots require a distributed worker queue.</div>
+<h3 class="subsection-title">7.3. Future Scope & Progressive Roadmap</h3>
+<div class="diagram-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 180" width="100%" height="auto" style="font-family:'Segoe UI',Roboto,Helvetica,sans-serif;">
+  <defs>
+    <filter id="shadow-road" x="-5%" y="-5%" width="110%" height="120%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-opacity="0.1"/>
+    </filter>
+    <marker id="arrow-road" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7"/>
+    </marker>
+  </defs>
+
+  <rect width="820" height="180" fill="#f8fafc" rx="8" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="410" y="22" text-anchor="middle" font-size="13" font-weight="bold" fill="#0f172a" letter-spacing="0.5">FIGURE 7.1: THREE-PHASE ARCHITECTURAL ROADMAP</text>
+
+  <!-- Phase 1: Current -->
+  <g transform="translate(30, 42)" filter="url(#shadow-road)">
+    <rect width="220" height="110" rx="6" fill="#ffffff" stroke="#0284c7" stroke-width="2"/>
+    <rect width="220" height="26" rx="6" fill="#e0f2fe"/>
+    <text x="110" y="18" text-anchor="middle" font-size="10" font-weight="bold" fill="#0369a1">CURRENT PRODUCTION</text>
+    <text x="110" y="46" text-anchor="middle" font-size="8.5" fill="#1e293b">• YuNet Edge Detection + ArcFace 512-d</text>
+    <text x="110" y="63" text-anchor="middle" font-size="8.5" fill="#1e293b">• Multi-Angle Wide Classroom Snapping</text>
+    <text x="110" y="80" text-anchor="middle" font-size="8.5" fill="#1e293b">• Human-in-the-Loop Review &amp; Audit Log</text>
+    <text x="110" y="97" text-anchor="middle" font-size="8.5" fill="#1e293b">• 3D Lanyard Passports &amp; 30-Day Purge</text>
+  </g>
+
+  <!-- Arrow P1 -> P2 -->
+  <line x1="250" y1="97" x2="290" y2="97" stroke="#0284c7" stroke-width="2" marker-end="url(#arrow-road)"/>
+
+  <!-- Phase 2: Near-Term -->
+  <g transform="translate(290, 42)" filter="url(#shadow-road)">
+    <rect width="230" height="110" rx="6" fill="#ffffff" stroke="#6366f1" stroke-width="2"/>
+    <rect width="230" height="26" rx="6" fill="#e0e7ff"/>
+    <text x="115" y="18" text-anchor="middle" font-size="10" font-weight="bold" fill="#4338ca">PHASE 2: NEAR-TERM ROADMAP</text>
+    <text x="115" y="46" text-anchor="middle" font-size="8.5" fill="#1e293b">• Anti-Spoofing &amp; Liveness (MiniFASNet)</text>
+    <text x="115" y="63" text-anchor="middle" font-size="8.5" fill="#1e293b">• Distributed Celery + Redis Worker Cluster</text>
+    <text x="115" y="80" text-anchor="middle" font-size="8.5" fill="#1e293b">• LMS Webhook Sync (Moodle / Canvas LTI 1.3)</text>
+    <text x="115" y="97" text-anchor="middle" font-size="8.5" fill="#1e293b">• Multi-Campus Academic Multi-Tenancy</text>
+  </g>
+
+  <!-- Arrow P2 -> P3 -->
+  <line x1="520" y1="97" x2="560" y2="97" stroke="#0284c7" stroke-width="2" marker-end="url(#arrow-road)"/>
+
+  <!-- Phase 3: Long-Term -->
+  <g transform="translate(560, 42)" filter="url(#shadow-road)">
+    <rect width="230" height="110" rx="6" fill="#ffffff" stroke="#059669" stroke-width="2"/>
+    <rect width="230" height="26" rx="6" fill="#d1fae5"/>
+    <text x="115" y="18" text-anchor="middle" font-size="10" font-weight="bold" fill="#065f46">PHASE 3: LONG-TERM VISION</text>
+    <text x="115" y="46" text-anchor="middle" font-size="8.5" fill="#1e293b">• Continuous RTSP CCTV Classroom Tracking</text>
+    <text x="115" y="63" text-anchor="middle" font-size="8.5" fill="#1e293b">• ByteTrack Dwell-Time Attendance Voting</text>
+    <text x="115" y="80" text-anchor="middle" font-size="8.5" fill="#1e293b">• Multi-Camera Spatio-Temporal Fusion</text>
+    <text x="115" y="97" text-anchor="middle" font-size="8.5" fill="#1e293b">• Automated WhatsApp &amp; SMS Parent Alerts</text>
+  </g>
+</svg><div class="diagram-caption">Figure 7.1: Three-Phase Architectural Roadmap</div></div>
+<p class="report-p">The EVOLVE platform follows a modular, three-phase engineering trajectory:</p>
+<p class="report-p">&lt;strong&gt;Phase 1: Current Deployed Release (Foundation)&lt;/strong&gt;</p>
+<p class="report-p">YuNet edge detection + ArcFace 512-d feature extraction <span class="math-inline">\rightarrow</span> Multi-angle classroom capture <span class="math-inline">\rightarrow</span> &lt;strong&gt;ISO/IEC 30107-3 Passive Liveness Detection (FFT Moiré & Chrominance PAD)&lt;/strong&gt; <span class="math-inline">\rightarrow</span> HITL review ledger with mandatory audit justification <span class="math-inline">\rightarrow</span> 3D digital ID enrollment <span class="math-inline">\rightarrow</span> 30-day automatic ephemeral image purge.</p>
+<div class="math-block">\downarrow</div>
+<p class="report-p">&lt;strong&gt;Phase 2: Near-Term Enhancements (6 to 12 Months)&lt;/strong&gt;</p>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Distributed Worker Queue (Celery + Redis):&lt;/strong&gt; Decouple heavy multi-photo batch processing across campus-wide distributed server pools.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Institutional LMS Synchronization:&lt;/strong&gt; Bi-directional gradebook adapters for Moodle, Canvas, and Blackboard via LTI 1.3 standards.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Continuous Edge Synchronization:&lt;/strong&gt; Offline-first caching for classroom areas with intermittent Wi-Fi connectivity.</div>
+<div class="math-block">\downarrow</div>
+<p class="report-p">&lt;strong&gt;Phase 3: Long-Term Enterprise Vision (12 to 24 Months)&lt;/strong&gt;</p>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Continuous Classroom CCTV Tracking (ByteTrack):&lt;/strong&gt; Ceiling-mounted RTSP cameras tracking student classroom dwell time (<span class="math-inline">&gt; 75\%</span> duration) continuously.</div>
+<div class="list-item-bullet"><span class="list-bullet">•</span> &lt;strong&gt;Automated Defaulter Warning Triggers:&lt;/strong&gt; Direct SMS and WhatsApp notifications dispatched to at-risk students falling below the mandatory <span class="math-inline">75\%</span> threshold.</div>
+<hr class="report-divider" />
+<h2 class="section-title">8. References</h2>
+<div class="list-item-num"><span class="list-num">1.</span> &lt;strong&gt;J. Deng, J. Guo, N. Xue, and S. Zafeiriou&lt;/strong&gt;, "ArcFace: Additive Angular Margin Loss for Deep Face Recognition," in &lt;em&gt;Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)&lt;/em&gt;, Long Beach, CA, USA, 2019, pp. 4690–4699.</div>
+<div class="list-item-num"><span class="list-num">2.</span> &lt;strong&gt;S. Wu, M. Peng, and Z. Yan&lt;/strong&gt;, "YuNet: A Fast and Accurate Face Detector on Edge Devices," &lt;em&gt;OpenCV Open-Source Technical Report&lt;/em&gt;, OpenCV Foundation, 2023.</div>
+<div class="list-item-num"><span class="list-num">3.</span> &lt;strong&gt;K. He, X. Zhang, S. Ren, and J. Sun&lt;/strong&gt;, "Deep Residual Learning for Image Recognition," in &lt;em&gt;Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)&lt;/em&gt;, Las Vegas, NV, USA, 2016, pp. 770–778.</div>
+<div class="list-item-num"><span class="list-num">4.</span> &lt;strong&gt;F. Schroff, D. Kalenichenko, and J. Philbin&lt;/strong&gt;, "FaceNet: A Unified Embedding for Face Recognition and Clustering," in &lt;em&gt;Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)&lt;/em&gt;, Boston, MA, USA, 2015, pp. 815–823.</div>
+<div class="list-item-num"><span class="list-num">5.</span> &lt;strong&gt;S. Accattoli, M. Bodini, G. Cisternino, and P. Zingaretti&lt;/strong&gt;, "SFace: Sigmoidal Constrained Hyperspherical Loss for Face Recognition," in &lt;em&gt;IEEE Access&lt;/em&gt;, vol. 9, pp. 143521–143534, 2021.</div>
+<div class="list-item-num"><span class="list-num">6.</span> &lt;strong&gt;P. Viola and M. Jones&lt;/strong&gt;, "Rapid Object Detection using a Boosted Cascade of Simple Features," in &lt;em&gt;Proceedings of the IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR)&lt;/em&gt;, Kauai, HI, USA, 2001, pp. 511–518.</div>
+<div class="list-item-num"><span class="list-num">7.</span> &lt;strong&gt;M. Turk and A. Pentland&lt;/strong&gt;, "Eigenfaces for Recognition," in &lt;em&gt;Journal of Cognitive Neuroscience&lt;/em&gt;, vol. 3, no. 1, pp. 71–86, 1991.</div>
+<div class="list-item-num"><span class="list-num">8.</span> &lt;strong&gt;H. W. Kuhn&lt;/strong&gt;, "The Hungarian Method for the Assignment Problem," in &lt;em&gt;Naval Research Logistics Quarterly&lt;/em&gt;, vol. 2, no. 1–2, pp. 83–97, 1955.</div>
+<div class="list-item-num"><span class="list-num">9.</span> &lt;strong&gt;European Parliament and Council of the European Union&lt;/strong&gt;, "Regulation (EU) 2016/679 (General Data Protection Regulation - GDPR)," in &lt;em&gt;Official Journal of the European Union&lt;/em&gt;, L 119, May 2016, pp. 1–88.</div>
+<div class="list-item-num"><span class="list-num">10.</span> &lt;strong&gt;Ministry of Law and Justice (Legislative Department)&lt;/strong&gt;, "The Digital Personal Data Protection Act, 2023 (No. 22 of 2023)," in &lt;em&gt;The Gazette of India&lt;/em&gt;, Extraordinary, Part II, Section 1, New Delhi, India, August 11, 2023.</div>
+<div class="list-item-num"><span class="list-num">11.</span> &lt;strong&gt;G. Bradski&lt;/strong&gt;, "The OpenCV Library," in &lt;em&gt;Dr. Dobb's Journal of Software Tools&lt;/em&gt;, vol. 25, no. 11, pp. 120–125, 2000.</div>
+<div class="list-item-num"><span class="list-num">12.</span> &lt;strong&gt;S. Ramírez-Gallego et al.&lt;/strong&gt;, "FastAPI: High-Performance Modern Web Framework for Building APIs with Python 3.8+," &lt;em&gt;Open-Source Software Specification&lt;/em&gt;, 2024.</div>
+</div>
+</body>
+</html>

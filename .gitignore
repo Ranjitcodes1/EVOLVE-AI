@@ -1,0 +1,78 @@
+# ==========================================
+# EVOLVE Academic Vision Suite - .gitignore
+# ==========================================
+
+# 1. Python & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 2. Node.js & Next.js Frontend
+node_modules/
+frontend/node_modules/
+.next/
+frontend/.next/
+out/
+frontend/out/
+.npm
+.eslintcache
+
+# 3. Environment Variables & Secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+frontend/.env.local
+backend/.env
+
+# 4. Databases & SQLite
+*.db
+*.sqlite
+*.sqlite3
+backend/*.db
+backend/*.sqlite3
+
+# 5. Ephemeral Uploads & Classroom Photos (Privacy Compliance)
+backend/uploads/*
+!backend/uploads/.gitkeep
+backend/storage/captures/*
+backend/storage/enrollments/*
+!backend/storage/.gitkeep
+
+# 6. Large Neural Network Weights (>100MB - Exceeds GitHub Limit)
+backend/weights/arcface_512d.onnx
+
+# 7. IDE & Operating System Files
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.log
+backend_out.log
+backend_err.log
