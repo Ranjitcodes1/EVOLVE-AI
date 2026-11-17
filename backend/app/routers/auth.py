@@ -144,41 +144,62 @@ def register_student(payload: StudentRegisterRequest, db: Session = Depends(get_
     if db.query(Student).filter(Student.urn == payload.urn).first():
         raise HTTPException(status_code=400, detail="University Registration Number (URN) is already registered.")
 
-    # 2. Resolve or create Department
-    dept = db.query(Department).filter(Department.department_code == payload.department_code.upper()).first()
+    # 2. Resolve or create Department (Normalize common variants like "Computer Science" -> "CSE")
+    raw_dept = (payload.department_code or "CSE").strip()
+    norm_dept = raw_dept.upper()
+    if norm_dept in ["COMPUTER SCIENCE", "COMPUTER SCIENCE & ENGINEERING", "COMP", "CS", "CSE"]:
+        dept_code = "CSE"
+        dept_name = "Department of Computer Science & Engineering"
+    else:
+        dept_code = norm_dept
+        dept_name = f"{raw_dept} Department"
+
+    dept = db.query(Department).filter(
+        (Department.department_code == dept_code) | (Department.department_code == "CSE" if dept_code == "CSE" else False)
+    ).first()
     if not dept:
         dept = Department(
-            department_code=payload.department_code.upper(),
-            department_name=f"{payload.department_code.upper()} Department"
+            department_code=dept_code,
+            department_name=dept_name
         )
         db.add(dept)
         db.flush()
 
     # 3. Resolve or create Branch
+    branch_code = "CSE" if dept_code == "CSE" else dept_code
     branch = db.query(Branch).filter(
-        Branch.department_id == dept.id,
-        Branch.branch_code == payload.department_code.upper()
+        (Branch.department_id == dept.id) & (Branch.branch_code == branch_code)
     ).first()
+    if not branch:
+        branch = db.query(Branch).filter(Branch.branch_code == branch_code).first()
     if not branch:
         branch = Branch(
             department_id=dept.id,
-            branch_code=payload.department_code.upper(),
-            branch_name=f"{payload.department_code.upper()} Engineering"
+            branch_code=branch_code,
+            branch_name="Computer Science & Engineering" if branch_code == "CSE" else f"{raw_dept} Engineering"
         )
         db.add(branch)
         db.flush()
 
     # 4. Resolve or create Division
+    target_div_name = (payload.division_name or "A").strip().upper()
     div = db.query(Division).filter(
         Division.branch_id == branch.id,
-        Division.division_name == payload.division_name.upper(),
-        Division.academic_year == payload.academic_year,
-        Division.semester == payload.semester
+        Division.division_name == target_div_name,
+        Division.semester == payload.semester,
+        Division.academic_year == payload.academic_year
     ).first()
+    if not div:
+        # Fallback to any division with same name, sem, and year
+        div = db.query(Division).filter(
+            Division.division_name == target_div_name,
+            Division.semester == payload.semester,
+            Division.academic_year == payload.academic_year
+        ).first()
     if not div:
         div = Division(
             branch_id=branch.id,
-            division_name=payload.division_name.upper(),
+            division_name=target_div_name,
             academic_year=payload.academic_year,
             semester=payload.semester
         )
@@ -208,15 +229,33 @@ def register_student(payload: StudentRegisterRequest, db: Session = Depends(get_
     db.add(student)
     db.flush()
 
-    # 6. Academic Auto-Binding: Find all active offerings for this division
+    # 6. Academic Auto-Binding: Find all active offerings for this division and related divisions
     offerings = db.query(AcademicOffering).filter(AcademicOffering.division_id == div.id).all()
+    if not offerings:
+        # Also bind to any offering matching this division name and semester
+        matching_div_ids = [
+            d.id for d in db.query(Division).filter(
+                Division.division_name == target_div_name,
+                Division.semester == payload.semester
+            ).all()
+        ]
+        if matching_div_ids:
+            offerings = db.query(AcademicOffering).filter(
+                AcademicOffering.division_id.in_(matching_div_ids)
+            ).all()
+
     for off in offerings:
-        enrollment = StudentEnrollment(
-            student_id=student.id,
-            offering_id=off.id,
-            status="enrolled"
-        )
-        db.add(enrollment)
+        existing_enr = db.query(StudentEnrollment).filter(
+            StudentEnrollment.student_id == student.id,
+            StudentEnrollment.offering_id == off.id
+        ).first()
+        if not existing_enr:
+            enrollment = StudentEnrollment(
+                student_id=student.id,
+                offering_id=off.id,
+                status="enrolled"
+            )
+            db.add(enrollment)
 
     db.commit()
 

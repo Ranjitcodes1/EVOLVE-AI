@@ -54,20 +54,37 @@ function AttendanceReviewContent({ sessionId }: { sessionId: string }) {
   const [confirming, setConfirming] = useState(false);
   const [confirmedSuccess, setConfirmedSuccess] = useState(false);
 
-  const fetchSessionProposals = async () => {
+  const fetchSessionProposals = async (isPoll = false) => {
     try {
-      setLoading(true);
+      if (!isPoll) setLoading(true);
       const res = await api.getProposals(sessionId);
       setData(res);
+      return res;
     } catch (err: any) {
-      setError(err.message || "Failed to load session proposals");
+      if (!isPoll) setError(err.message || "Failed to load session proposals");
+      return null;
     } finally {
-      setLoading(false);
+      if (!isPoll) setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchSessionProposals();
+    let intervalId: NodeJS.Timeout | null = null;
+
+    fetchSessionProposals().then((res) => {
+      if (res && (res.status === "processing" || res.status === "queued")) {
+        intervalId = setInterval(async () => {
+          const updated = await fetchSessionProposals(true);
+          if (updated && updated.status !== "processing" && updated.status !== "queued") {
+            if (intervalId) clearInterval(intervalId);
+          }
+        }, 2000);
+      }
+    });
+
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+    };
   }, [sessionId]);
 
   const handleOpenEdit = (student: AttendanceProposalItem) => {
@@ -210,6 +227,28 @@ function AttendanceReviewContent({ sessionId }: { sessionId: string }) {
           )}
         </div>
       </div>
+
+      {(data.status === "processing" || data.status === "queued") && (
+        <div className="p-4 rounded-xl bg-amber-50 border-2 border-slate-900 shadow-[3px_3px_0_#0d0d0d] text-amber-950 text-sm flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-5 h-5 border-2 border-amber-800 border-t-transparent rounded-full animate-spin shrink-0" />
+            <div>
+              <span className="font-extrabold uppercase tracking-wide text-xs text-amber-900 flex items-center gap-1.5">
+                AI Vision Worker Running • ArcFace 512-d Recognition In Progress
+              </span>
+              <p className="text-xs text-amber-800 font-medium mt-0.5">
+                Detecting classroom faces and matching with enrolled student templates. This screen is auto-refreshing...
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => fetchSessionProposals()}
+            className="px-3 py-1.5 rounded-lg border-2 border-slate-900 bg-amber-200 hover:bg-amber-300 text-slate-900 font-black text-xs uppercase tracking-wider shadow-[1.5px_1.5px_0_#0d0d0d] transition shrink-0"
+          >
+            Refresh Now
+          </button>
+        </div>
+      )}
 
       {confirmedSuccess && (
         <div className="p-4 rounded-xl bg-emerald-50 border-2 border-slate-900 shadow-[3px_3px_0_#0d0d0d] text-emerald-950 text-sm flex items-center justify-between">

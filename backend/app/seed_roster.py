@@ -128,19 +128,23 @@ def seed_database():
         print(f" [OK] Created {len(offerings_a)} Academic Offerings for Division A")
 
         # 5. Teacher (Dr. Sarah Jenkins)
-        teacher_prof = db.query(Profile).filter(Profile.email == "teacher@snapclass.edu").first()
-        if not teacher_prof:
-            teacher_prof = Profile(
-                email="teacher@snapclass.edu",
-                password_hash=get_password_hash("Password123!"),
-                role="teacher",
-                status="active"
-            )
-            db.add(teacher_prof)
-            db.flush()
-
-        teacher = db.query(Teacher).filter(Teacher.profile_id == teacher_prof.id).first()
+        teacher = db.query(Teacher).filter(
+            (Teacher.faculty_id == "FAC-2026-104") | (Teacher.full_name == "Dr. Sarah Jenkins")
+        ).first()
         if not teacher:
+            teacher_prof = db.query(Profile).filter(
+                (Profile.email == "sarah.jenkins@evolve.edu") | (Profile.email == "teacher@snapclass.edu")
+            ).first()
+            if not teacher_prof:
+                teacher_prof = Profile(
+                    email="sarah.jenkins@evolve.edu",
+                    password_hash=get_password_hash("password123"),
+                    role="teacher",
+                    status="active"
+                )
+                db.add(teacher_prof)
+                db.flush()
+
             teacher = Teacher(
                 profile_id=teacher_prof.id,
                 faculty_id="FAC-2026-104",
@@ -152,6 +156,8 @@ def seed_database():
             db.add(teacher)
             db.flush()
             print(" [OK] Created Teacher Profile: Dr. Sarah Jenkins (FAC-2026-104)")
+        else:
+            print(" [OK] Found existing Teacher: Dr. Sarah Jenkins (FAC-2026-104)")
 
         # Assign Dr. Sarah Jenkins to all Division A offerings
         for off in offerings_a:
@@ -297,7 +303,7 @@ def seed_database():
                         status="present" if is_present else "absent",
                         recognition_similarity=0.88 if is_present else None,
                         review_state="accepted" if is_present else "not_detected",
-                        marked_by=teacher_prof.id,
+                        marked_by=teacher.profile_id,
                         marking_method="ai_proposed"
                     ))
 

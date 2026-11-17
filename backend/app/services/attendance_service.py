@@ -84,19 +84,35 @@ class AttendanceService:
             StudentEnrollment.offering_id == offering_id,
             StudentEnrollment.status == "enrolled"
         ).all()
+        candidate_ids = set(e.student_id for e in enrollments)
 
-        student_ids = [e.student_id for e in enrollments]
-        # Fallback to division students if specific enrollments aren't populated
-        if not student_ids and offering.division_id:
-            students = db.query(Student).filter(
+        # Also union any active students belonging to this division or matching division
+        if offering and offering.division_id:
+            div_students = db.query(Student).filter(
                 Student.division_id == offering.division_id,
                 Student.status == "active"
             ).all()
-        else:
-            students = db.query(Student).filter(
-                Student.id.in_(student_ids),
-                Student.status == "active"
-            ).all()
+            for ds in div_students:
+                candidate_ids.add(ds.id)
+
+            offering_div = offering.division
+            if offering_div:
+                matching_divs = db.query(Division).filter(
+                    Division.division_name == offering_div.division_name,
+                    Division.semester == offering_div.semester
+                ).all()
+                for md in matching_divs:
+                    m_students = db.query(Student).filter(
+                        Student.division_id == md.id,
+                        Student.status == "active"
+                    ).all()
+                    for ms in m_students:
+                        candidate_ids.add(ms.id)
+
+        students = db.query(Student).filter(
+            Student.id.in_(list(candidate_ids)),
+            Student.status == "active"
+        ).all()
 
         roster = []
         for s in students:

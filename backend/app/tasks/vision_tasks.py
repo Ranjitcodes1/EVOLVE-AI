@@ -87,18 +87,35 @@ def execute_session_vision_task(session_id: str, teacher_profile_id: str, task_i
             StudentEnrollment.offering_id == session.offering_id,
             StudentEnrollment.status == "enrolled"
         ).all()
-        student_ids = [e.student_id for e in enrollments]
+        candidate_ids = set(e.student_id for e in enrollments)
 
-        if not student_ids and offering and offering.division_id:
-            students = db.query(Student).filter(
+        # Union active students from offering's division and matching divisions
+        if offering and offering.division_id:
+            div_students = db.query(Student).filter(
                 Student.division_id == offering.division_id,
                 Student.status == "active"
             ).all()
-        else:
-            students = db.query(Student).filter(
-                Student.id.in_(student_ids),
-                Student.status == "active"
-            ).all()
+            for ds in div_students:
+                candidate_ids.add(ds.id)
+
+            offering_div = offering.division
+            if offering_div:
+                matching_divs = db.query(Division).filter(
+                    Division.division_name == offering_div.division_name,
+                    Division.semester == offering_div.semester
+                ).all()
+                for md in matching_divs:
+                    m_students = db.query(Student).filter(
+                        Student.division_id == md.id,
+                        Student.status == "active"
+                    ).all()
+                    for ms in m_students:
+                        candidate_ids.add(ms.id)
+
+        students = db.query(Student).filter(
+            Student.id.in_(list(candidate_ids)),
+            Student.status == "active"
+        ).all()
 
         roster = []
         for s in students:
