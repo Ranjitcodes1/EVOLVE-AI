@@ -150,7 +150,7 @@ def seed_database(force_reseed: bool = False):
             role="faculty",
             status="active"
         )
-        # Also alias teacher@snapclass.edu for backwards compatibility
+        # Also alias teacher@snapclass.edu and sarah.jenkins@evolve.edu
         prof_teacher = Profile(
             institution_id=inst.id,
             email="teacher@snapclass.edu",
@@ -158,11 +158,24 @@ def seed_database(force_reseed: bool = False):
             role="faculty",
             status="active"
         )
-        db.add_all([prof_faculty, prof_teacher])
+        prof_sarah = Profile(
+            institution_id=inst.id,
+            email="sarah.jenkins@evolve.edu",
+            password_hash=default_password,
+            role="teacher",
+            status="active"
+        )
+        db.add_all([prof_faculty, prof_teacher, prof_sarah])
         db.flush()
 
         faculty_member = Teacher(
-            profile_id=prof_faculty.id,
+            profile_id=prof_sarah.id,
+            faculty_id="FAC-2026-104",
+            full_name="Dr. Sarah Jenkins",
+            department_id=dept.id,
+            designation="Associate Professor",
+            status="active"
+        )
             faculty_id="FAC-CSE-001",
             full_name="Prof. Alan Turing",
             department_id=dept.id,
