@@ -65,8 +65,18 @@ def verify_refresh_token(token: str, db: Session) -> Profile:
         raise credentials_exception
 
     profile = db.query(Profile).filter(Profile.id == profile_id).first()
-    if profile is None or profile.status != "active":
-        raise HTTPException(status_code=403, detail="User account is inactive or not found")
+    if profile is None:
+        email = payload.get("email")
+        if email:
+            profile = db.query(Profile).filter(Profile.email.ilike(email)).first()
+    if profile is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Session invalid or user account not found. Please sign in again.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    if profile.status != "active":
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="User account is inactive. Contact administration.")
 
     # Invalidate if password reset or remote sign-out was triggered
     if profile.token_version != token_version:

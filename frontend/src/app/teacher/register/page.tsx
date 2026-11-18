@@ -16,15 +16,13 @@ export default function RegisterTeacherPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  // AUTO-REDIRECT GUARD: If teacher is already logged in, redirect directly to faculty studio
-  // If another role is active, clear it so faculty registration is completely clean
+  // When visiting the faculty registration page, clear any stale or previous session
+  // so the user can freely create a new teacher account without being bounced away
   useEffect(() => {
-    if (user && user.role === "teacher") {
-      router.replace("/teacher");
-    } else if (user && user.role !== "teacher") {
+    if (user) {
       logout(null);
     }
-  }, [user, router, logout]);
+  }, []);
 
   const handleCardSubmit = async (data: TeacherCardData, validity: TeacherCardValidity) => {
     if (!validity.allValid) {
@@ -127,14 +125,16 @@ export default function RegisterTeacherPage() {
       <section className="flex-1 w-full max-w-5xl mx-auto px-4 py-2 flex items-center justify-center overflow-hidden">
         <TeacherIdCardForm
           defaultValues={{
-            institution: "",
+            institution: "School of Engineering & Technology",
             facultyId: "",
             fullName: "",
-            course: "",
-            branchCode: "",
-            subjectCode: "",
-            subjectName: "",
-            division: "",
+            department: "Computer Science",
+            designation: "Assistant Professor",
+            course: "Computer Science & Engineering",
+            branchCode: "CSE",
+            subjectCode: "CS401",
+            subjectName: "Object Oriented Programming",
+            division: "A",
             semester: 3,
             academicYear: "2026-2027",
             email: "",

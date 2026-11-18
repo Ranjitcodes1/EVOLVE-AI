@@ -27,7 +27,7 @@ function LoginFormContent() {
   // AUTO-REDIRECT & AUTO-SESSION CLEAR GUARD
   useEffect(() => {
     if (user) {
-      const userRole = (user.role === "faculty" || (user.role as any) === "teacher") ? "teacher" : user.role;
+      const userRole = ((user.role as string) === "faculty" || user.role === "teacher") ? "teacher" : user.role;
       const expectedRole = (roleParam === "faculty" || roleParam === "teacher") ? "teacher" : roleParam;
 
       if (!expectedRole || userRole === expectedRole) {

@@ -26,7 +26,7 @@ import {
 } from "lucide-react";
 
 export default function StudentDashboard() {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, logout } = useAuth();
   const router = useRouter();
   const [data, setData] = useState<StudentDashboardData | null>(() => {
     if (typeof window !== "undefined") {
@@ -232,6 +232,14 @@ export default function StudentDashboard() {
               <Camera className="h-3.5 w-3.5 text-rose-500" />
               <span className="hidden sm:inline">Update Photo</span>
             </Link>
+
+            <button
+              onClick={() => logout("/login?role=student")}
+              className="p-3 rounded-xl border-2 border-slate-900 bg-white text-rose-700 hover:bg-rose-50 shadow-[2px_2px_0_#0d0d0d] text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition active:translate-y-0.5"
+              title="Sign out of student account"
+            >
+              Sign Out
+            </button>
           </div>
         </div>
 

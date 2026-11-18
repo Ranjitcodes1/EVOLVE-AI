@@ -31,7 +31,7 @@ import {
 } from "@/lib/api";
 
 export default function TeacherDashboard() {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, logout } = useAuth();
   const router = useRouter();
   const [offerings, setOfferings] = useState<TeacherOffering[]>([]);
   const [recentSessions, setRecentSessions] = useState<AttendanceSessionSummary[]>([]);
@@ -263,7 +263,7 @@ export default function TeacherDashboard() {
             </p>
           </div>
 
-          <div>
+          <div className="flex flex-wrap items-center gap-3">
             <Link
               href="/teacher/session/new"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs uppercase tracking-wider border-2 border-slate-900 shadow-[3px_3px_0_#0d0d0d] transition active:translate-y-0.5"
@@ -272,6 +272,13 @@ export default function TeacherDashboard() {
               <span>Take Classroom Attendance</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
+            <button
+              onClick={() => logout("/login?role=teacher")}
+              className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl bg-white hover:bg-rose-50 text-rose-700 font-black text-xs uppercase tracking-wider border-2 border-slate-900 shadow-[3px_3px_0_#0d0d0d] transition active:translate-y-0.5"
+              title="Sign out of current account"
+            >
+              Sign Out
+            </button>
           </div>
         </div>
 
