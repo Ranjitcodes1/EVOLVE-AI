@@ -114,6 +114,19 @@ class AttendanceService:
             Student.status == "active"
         ).all()
 
+        for s in students:
+            existing_enr = db.query(StudentEnrollment).filter(
+                StudentEnrollment.student_id == s.id,
+                StudentEnrollment.offering_id == offering_id
+            ).first()
+            if not existing_enr:
+                db.add(StudentEnrollment(
+                    student_id=s.id,
+                    offering_id=offering_id,
+                    status="enrolled"
+                ))
+        db.commit()
+
         roster = []
         for s in students:
             # Fetch active embedding

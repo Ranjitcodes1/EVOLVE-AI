@@ -108,9 +108,19 @@ def resolve_or_create_offering(
         db.add(offering)
         db.flush()
 
-    # Auto-enroll any students in that division who aren't already enrolled
+    # Auto-enroll all students belonging to this division name and semester
+    matching_divs = db.query(Division).filter(
+        Division.division_name.ilike(d_name),
+        Division.semester == semester
+    ).all()
+    matching_div_ids = [d.id for d in matching_divs]
+    if div.id not in matching_div_ids:
+        matching_div_ids.append(div.id)
+
     students = db.query(Student).filter(
-        Student.division_id == div.id,
+        (Student.division_id.in_(matching_div_ids)) | (
+            (Student.semester == semester) & Student.division.has(Division.division_name.ilike(d_name))
+        ),
         Student.status == "active"
     ).all()
     for s in students:
@@ -314,16 +324,37 @@ def get_my_offerings(
 
     result = []
     for off in offerings:
-        # Count students
-        count = db.query(StudentEnrollment).filter(
-            StudentEnrollment.offering_id == off.id,
-            StudentEnrollment.status == "enrolled"
-        ).count()
-        if count == 0 and off.division_id:
-            count = db.query(Student).filter(
+        # Count all students: explicit enrollments UNION all students registered in matching division
+        enrolled_ids = set(
+            e.student_id for e in db.query(StudentEnrollment.student_id).filter(
+                StudentEnrollment.offering_id == off.id,
+                StudentEnrollment.status == "enrolled"
+            ).all()
+        )
+        if off.division:
+            matching_div_ids = [
+                d.id for d in db.query(Division.id).filter(
+                    Division.division_name.ilike(off.division.division_name),
+                    Division.semester == off.division.semester
+                ).all()
+            ]
+            if off.division_id not in matching_div_ids:
+                matching_div_ids.append(off.division_id)
+            div_students = db.query(Student.id).filter(
+                Student.status == "active",
+                Student.division_id.in_(matching_div_ids)
+            ).all()
+            for (sid,) in div_students:
+                enrolled_ids.add(sid)
+        elif off.division_id:
+            div_students = db.query(Student.id).filter(
                 Student.division_id == off.division_id,
                 Student.status == "active"
-            ).count()
+            ).all()
+            for (sid,) in div_students:
+                enrolled_ids.add(sid)
+
+        count = len(enrolled_ids)
 
         result.append(TeacherOfferingResponse(
             offering_id=off.id,
@@ -373,23 +404,63 @@ def get_offering_student_roster(
     if not offering:
         raise HTTPException(status_code=404, detail="Offering not found")
 
-    # Get enrolled or division students
+    # 1. Direct enrollments
     enrollments = db.query(StudentEnrollment).filter(
         StudentEnrollment.offering_id == offering_id,
         StudentEnrollment.status == "enrolled"
     ).all()
-    student_ids = [e.student_id for e in enrollments]
+    student_ids = set(e.student_id for e in enrollments)
 
-    if not student_ids and offering.division_id:
-        students = db.query(Student).filter(
+    # 2. Union all active students in matching division and auto-backfill enrollments
+    if offering.division:
+        matching_div_ids = [
+            d.id for d in db.query(Division.id).filter(
+                Division.division_name.ilike(offering.division.division_name),
+                Division.semester == offering.division.semester
+            ).all()
+        ]
+        if offering.division_id not in matching_div_ids:
+            matching_div_ids.append(offering.division_id)
+        div_students = db.query(Student).filter(
+            Student.status == "active",
+            Student.division_id.in_(matching_div_ids)
+        ).all()
+        for ds in div_students:
+            student_ids.add(ds.id)
+            existing_enr = db.query(StudentEnrollment).filter(
+                StudentEnrollment.student_id == ds.id,
+                StudentEnrollment.offering_id == offering_id
+            ).first()
+            if not existing_enr:
+                db.add(StudentEnrollment(
+                    student_id=ds.id,
+                    offering_id=offering_id,
+                    status="enrolled"
+                ))
+    elif offering.division_id:
+        div_students = db.query(Student).filter(
             Student.division_id == offering.division_id,
             Student.status == "active"
-        ).order_by(Student.roll_number.asc(), Student.full_name.asc()).all()
-    else:
-        students = db.query(Student).filter(
-            Student.id.in_(student_ids),
-            Student.status == "active"
-        ).order_by(Student.roll_number.asc(), Student.full_name.asc()).all()
+        ).all()
+        for ds in div_students:
+            student_ids.add(ds.id)
+            existing_enr = db.query(StudentEnrollment).filter(
+                StudentEnrollment.student_id == ds.id,
+                StudentEnrollment.offering_id == offering_id
+            ).first()
+            if not existing_enr:
+                db.add(StudentEnrollment(
+                    student_id=ds.id,
+                    offering_id=offering_id,
+                    status="enrolled"
+                ))
+
+    db.commit()
+
+    students = db.query(Student).filter(
+        Student.id.in_(list(student_ids)),
+        Student.status == "active"
+    ).order_by(Student.roll_number.asc(), Student.full_name.asc()).all()
 
     # Confirmed sessions for this offering
     confirmed_sessions = db.query(AttendanceSession).filter(

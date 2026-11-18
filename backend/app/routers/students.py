@@ -84,14 +84,22 @@ def register_student(payload: StudentRegisterRequest, db: Session = Depends(get_
     db.add(student)
     db.flush()
 
-    # Auto-enroll only into division offerings that have active faculty assignments
-    if division:
-        active_offerings = db.query(AcademicOffering).filter(
-            AcademicOffering.division_id == division.id,
-            AcademicOffering.teacher_assignments.any()
-        ).all()
-        for off in active_offerings:
-            db.add(StudentEnrollment(student_id=student.id, offering_id=off.id, status="enrolled"))
+    # Auto-enroll into all offerings matching this division name and semester
+    target_div_name = (payload.division_name or "A").strip().upper()
+    target_sem = payload.semester or 3
+    matching_divs = db.query(Division).filter(
+        Division.division_name.ilike(target_div_name),
+        Division.semester == target_sem
+    ).all()
+    matching_div_ids = [d.id for d in matching_divs]
+    if division and division.id not in matching_div_ids:
+        matching_div_ids.append(division.id)
+
+    offerings = db.query(AcademicOffering).filter(
+        AcademicOffering.division_id.in_(matching_div_ids)
+    ).all()
+    for off in offerings:
+        db.add(StudentEnrollment(student_id=student.id, offering_id=off.id, status="enrolled"))
 
     db.commit()
     db.refresh(student)
@@ -248,20 +256,59 @@ def get_my_attendance(
         safe_miss_overall = 0
         recovery_needed_overall = max(1, math.ceil((0.75 * total_classes - attended_classes) / 0.25))
 
-    # Teacher-Driven Subject Discovery:
-    # Subjects appear if actively assigned to a faculty member for this division, or if confirmed sessions exist.
+    # Dynamic Cohort Subject Discovery (Division & Semester Matching):
+    # Any subject offering belonging to the student's Division & Semester is automatically bound to the student.
+    div_name = (student.division.division_name if student.division else "A").strip().upper()
+    sem = student.semester or (student.division.semester if student.division else 3)
+
+    matching_divs = db.query(Division).filter(
+        Division.division_name.ilike(div_name),
+        Division.semester == sem
+    ).all()
+    matching_div_ids = [d.id for d in matching_divs]
+    if student.division_id and student.division_id not in matching_div_ids:
+        matching_div_ids.append(student.division_id)
+
+    # 1. Offerings for matching divisions
+    division_offerings = db.query(AcademicOffering).filter(
+        AcademicOffering.division_id.in_(matching_div_ids)
+    ).all()
+
+    # 2. Offerings explicitly enrolled
+    enrolled_offerings = [
+        e.offering for e in db.query(StudentEnrollment).filter(
+            StudentEnrollment.student_id == student.id,
+            StudentEnrollment.status == "enrolled"
+        ).all() if e.offering
+    ]
+
+    all_offerings_map = {}
+    for off in division_offerings + enrolled_offerings:
+        if off and off.id not in all_offerings_map:
+            all_offerings_map[off.id] = off
+
+    # Auto-enroll student into any missing matching offerings for persistent tracking
+    for off_id, off in all_offerings_map.items():
+        existing_enr = db.query(StudentEnrollment).filter(
+            StudentEnrollment.student_id == student.id,
+            StudentEnrollment.offering_id == off_id
+        ).first()
+        if not existing_enr:
+            db.add(StudentEnrollment(
+                student_id=student.id,
+                offering_id=off_id,
+                status="enrolled"
+            ))
+
+    db.commit()
+
     subjects_map = {}
-    if student.division_id:
-        active_offerings = db.query(AcademicOffering).filter(
-            AcademicOffering.division_id == student.division_id,
-            AcademicOffering.teacher_assignments.any()
-        ).all()
-        for off in active_offerings:
-            if off.subject:
-                code = off.subject.subject_code
-                name = off.subject.subject_name
-                if code not in subjects_map:
-                    subjects_map[code] = {"name": name, "total": 0, "attended": 0}
+    for off in all_offerings_map.values():
+        if off.subject:
+            code = off.subject.subject_code
+            name = off.subject.subject_name
+            if code not in subjects_map:
+                subjects_map[code] = {"name": name, "total": 0, "attended": 0}
 
     recent_list = []
     for r, s in records:

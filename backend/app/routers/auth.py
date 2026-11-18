@@ -260,20 +260,18 @@ def register_student(payload: StudentRegisterRequest, db: Session = Depends(get_
     db.add(student)
     db.flush()
 
-    # 6. Academic Auto-Binding: Find all active offerings for this division and related divisions
-    offerings = db.query(AcademicOffering).filter(AcademicOffering.division_id == div.id).all()
-    if not offerings:
-        # Also bind to any offering matching this division name and semester
-        matching_div_ids = [
-            d.id for d in db.query(Division).filter(
-                Division.division_name == target_div_name,
-                Division.semester == payload.semester
-            ).all()
-        ]
-        if matching_div_ids:
-            offerings = db.query(AcademicOffering).filter(
-                AcademicOffering.division_id.in_(matching_div_ids)
-            ).all()
+    # 6. Academic Auto-Binding: Find all active offerings for this division name and semester
+    matching_divs = db.query(Division).filter(
+        Division.division_name.ilike(target_div_name),
+        Division.semester == payload.semester
+    ).all()
+    matching_div_ids = [d.id for d in matching_divs]
+    if div.id not in matching_div_ids:
+        matching_div_ids.append(div.id)
+
+    offerings = db.query(AcademicOffering).filter(
+        AcademicOffering.division_id.in_(matching_div_ids)
+    ).all()
 
     for off in offerings:
         existing_enr = db.query(StudentEnrollment).filter(
