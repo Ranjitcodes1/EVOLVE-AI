@@ -28,6 +28,7 @@ from app.services.attendance_service import attendance_service
 from app.services.storage_service import storage_service
 from app.services.retention_service import retention_service
 from app.services.task_service import task_service
+from app.routers.teachers import get_or_create_teacher
 from app.tasks.vision_tasks import execute_session_vision_task
 
 router = APIRouter(prefix="/attendance", tags=["Attendance Sessions"])
@@ -38,7 +39,7 @@ def create_session(
     current_user: Profile = Depends(require_roles(["faculty", "teacher"])),
     db: Session = Depends(get_db)
 ):
-    teacher = db.query(Teacher).filter(Teacher.profile_id == current_user.id).first()
+    teacher = get_or_create_teacher(current_user, db)
     if not teacher:
         raise HTTPException(status_code=403, detail="Only faculty can start an attendance session")
 

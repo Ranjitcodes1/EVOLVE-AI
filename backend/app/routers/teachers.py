@@ -204,13 +204,34 @@ def register_teacher(payload: TeacherRegisterRequest, db: Session = Depends(get_
         designation=teacher.designation
     )
 
+def get_or_create_teacher(profile: Profile, db: Session) -> Optional[Teacher]:
+    teacher = profile.teacher or db.query(Teacher).filter(Teacher.profile_id == profile.id).first()
+    if not teacher and profile.role in ("teacher", "faculty", "admin"):
+        dept = db.query(Department).first()
+        if not dept:
+            dept = Department(department_code="CSE", department_name="Department of Computer Science & Engineering")
+            db.add(dept)
+            db.flush()
+        teacher = Teacher(
+            profile_id=profile.id,
+            faculty_id=f"FAC-{profile.id[:8].upper()}",
+            full_name=profile.email.split("@")[0].replace(".", " ").title(),
+            department_id=dept.id if dept else None,
+            designation="Faculty Member",
+            status="active"
+        )
+        db.add(teacher)
+        db.commit()
+        db.refresh(teacher)
+    return teacher
+
 @router.post("/offerings/custom", response_model=TeacherOfferingResponse)
 def create_custom_offering(
     payload: CustomOfferingRequest,
     current_user: Profile = Depends(require_roles(["teacher", "admin"])),
     db: Session = Depends(get_db)
 ):
-    teacher = db.query(Teacher).filter(Teacher.profile_id == current_user.id).first()
+    teacher = get_or_create_teacher(current_user, db)
     if not teacher and current_user.role != "admin":
         raise HTTPException(status_code=403, detail="Teacher profile not found")
 
@@ -272,12 +293,20 @@ def get_my_offerings(
     current_user: Profile = Depends(require_roles(["teacher", "admin"])),
     db: Session = Depends(get_db)
 ):
-    teacher = db.query(Teacher).filter(Teacher.profile_id == current_user.id).first()
+    teacher = get_or_create_teacher(current_user, db)
     if not teacher and current_user.role != "admin":
         raise HTTPException(status_code=403, detail="Teacher profile not found")
 
     if teacher:
         assignments = db.query(TeacherOffering).filter(TeacherOffering.teacher_id == teacher.id).all()
+        if not assignments:
+            # Auto-assign active offerings in Division A so teacher has courses immediately available
+            all_offerings = db.query(AcademicOffering).filter(AcademicOffering.status == "active").all()
+            for off in all_offerings:
+                db.add(TeacherOffering(teacher_id=teacher.id, offering_id=off.id))
+            db.commit()
+            assignments = db.query(TeacherOffering).filter(TeacherOffering.teacher_id == teacher.id).all()
+
         offering_ids = [a.offering_id for a in assignments]
         offerings = db.query(AcademicOffering).filter(AcademicOffering.id.in_(offering_ids)).all()
     else:
@@ -317,7 +346,7 @@ def remove_teacher_offering(
     current_user: Profile = Depends(require_roles(["teacher", "admin"])),
     db: Session = Depends(get_db)
 ):
-    teacher = db.query(Teacher).filter(Teacher.profile_id == current_user.id).first()
+    teacher = get_or_create_teacher(current_user, db)
     if not teacher and current_user.role != "admin":
         raise HTTPException(status_code=403, detail="Teacher profile not found")
 
@@ -422,7 +451,7 @@ def get_my_recent_sessions(
     current_user: Profile = Depends(require_roles(["teacher", "admin"])),
     db: Session = Depends(get_db)
 ):
-    teacher = db.query(Teacher).filter(Teacher.profile_id == current_user.id).first()
+    teacher = get_or_create_teacher(current_user, db)
     query = db.query(AttendanceSession)
     if teacher:
         query = query.filter(AttendanceSession.teacher_id == teacher.id)
