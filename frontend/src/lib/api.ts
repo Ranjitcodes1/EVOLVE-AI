@@ -184,7 +184,7 @@ class ApiClient {
     });
 
     if (!res.ok) {
-      if (res.status === 401) {
+      if (res.status === 401 || res.status === 403) {
         if (typeof window !== "undefined") {
           localStorage.removeItem("snapclass_token");
           localStorage.removeItem("snapclass_user");

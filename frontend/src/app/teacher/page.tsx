@@ -59,15 +59,15 @@ export default function TeacherDashboard() {
     academic_year: "2026-2027",
   });
 
-  // AUTH GUARD: If not logged in as teacher, redirect directly to faculty sign-in
+  // AUTH GUARD: If not logged in as teacher/faculty, redirect directly to faculty sign-in
   useEffect(() => {
-    if (!isLoading && (!user || user.role !== "teacher")) {
+    if (!isLoading && (!user || (user.role !== "teacher" && (user.role as any) !== "faculty"))) {
       router.replace("/login?role=teacher");
     }
   }, [user, isLoading, router]);
 
   useEffect(() => {
-    if (!user || user.role !== "teacher") return;
+    if (!user || (user.role !== "teacher" && (user.role as any) !== "faculty")) return;
 
     async function loadData() {
       try {
