@@ -107,11 +107,10 @@ export default function TeacherDashboard() {
         semester: Number(newOfferingData.semester),
         academic_year: newOfferingData.academic_year,
       });
-      setOfferings((prev) => [created, ...prev]);
-      if (!selectedOfferingId) {
-        setSelectedOfferingId(created.offering_id);
-      }
+      setOfferings((prev) => [created, ...prev.filter(o => o.offering_id !== created.offering_id)]);
+      setSelectedOfferingId(created.offering_id);
       setShowAddModal(false);
+      api.getTeacherOfferings().then(setOfferings).catch(() => {});
       setNewOfferingData({
         course_name: "Computer Science & Engineering",
         branch_code: "CSE",

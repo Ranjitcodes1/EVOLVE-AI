@@ -59,10 +59,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem("snapclass_user");
-    const token = localStorage.getItem("snapclass_token");
+    if (typeof window === "undefined") return;
+    const path = window.location.pathname;
+    const routeRole = path.startsWith("/teacher") ? "teacher" : path.startsWith("/student") ? "student" : path.startsWith("/admin") ? "admin" : null;
+
+    const savedUser = (routeRole && localStorage.getItem(`snapclass_user_${routeRole}`)) || localStorage.getItem("snapclass_user");
+    const token = (routeRole && localStorage.getItem(`snapclass_token_${routeRole}`)) || localStorage.getItem("snapclass_token");
+
     if (savedUser && token) {
       if (isTokenExpired(token)) {
+        if (routeRole) {
+          localStorage.removeItem(`snapclass_token_${routeRole}`);
+          localStorage.removeItem(`snapclass_user_${routeRole}`);
+        }
         localStorage.removeItem("snapclass_token");
         localStorage.removeItem("snapclass_user");
         try {
@@ -124,8 +133,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const logout = (redirectTo: any = "/login") => {
-    localStorage.removeItem("snapclass_token");
-    localStorage.removeItem("snapclass_user");
+    if (typeof window !== "undefined") {
+      const path = window.location.pathname;
+      const routeRole = path.startsWith("/teacher") ? "teacher" : path.startsWith("/student") ? "student" : path.startsWith("/admin") ? "admin" : null;
+      if (routeRole) {
+        localStorage.removeItem(`snapclass_token_${routeRole}`);
+        localStorage.removeItem(`snapclass_user_${routeRole}`);
+      }
+      localStorage.removeItem("snapclass_token");
+      localStorage.removeItem("snapclass_user");
+      try {
+        sessionStorage.removeItem("snapclass_student_cache");
+      } catch {}
+    }
     setUser(null);
     if (typeof redirectTo === "string") {
       router.push(redirectTo);

@@ -92,6 +92,7 @@ def seed_database():
             ("CS303", "Database Management Systems"),
             ("CS304", "Data Structures & Algorithms"),
             ("CS305", "Theory of Computation"),
+            ("CS401", "Object Oriented Programming"),
         ]
 
         subjects = []

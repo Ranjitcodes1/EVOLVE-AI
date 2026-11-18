@@ -23,6 +23,7 @@ import {
   GraduationCap,
   ChevronRight,
   CheckCircle,
+  RefreshCw,
 } from "lucide-react";
 
 export default function StudentDashboard() {
@@ -45,6 +46,7 @@ export default function StudentDashboard() {
     return true;
   });
   const [error, setError] = useState<string | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   // Selected subject for detailed day-by-day heatmap & verified roll-call history
   const [selectedSubjectCode, setSelectedSubjectCode] = useState<string | null>(null);
@@ -64,34 +66,38 @@ export default function StudentDashboard() {
     }
   }, [user, isLoading, router]);
 
+  const fetchAttendance = async (silent = false) => {
+    if (!silent) setIsRefreshing(true);
+    try {
+      const attendanceRes = await api.getStudentAttendance();
+      setData(attendanceRes);
+      try {
+        sessionStorage.setItem("snapclass_student_cache", JSON.stringify(attendanceRes));
+      } catch {}
+      setError(null);
+    } catch (err: any) {
+      if (!data) {
+        setError(err.message || "Failed to load student attendance data");
+      }
+    } finally {
+      setLoading(false);
+      setIsRefreshing(false);
+    }
+  };
+
   useEffect(() => {
     if (!user || user.role !== "student") return;
 
-    let isMounted = true;
-    async function fetchData() {
-      try {
-        const attendanceRes = await api.getStudentAttendance();
-        if (!isMounted) return;
-        setData(attendanceRes);
-        try {
-          sessionStorage.setItem("snapclass_student_cache", JSON.stringify(attendanceRes));
-        } catch {}
-      } catch (err: any) {
-        if (!isMounted) return;
-        // If we have cached data, don't overwrite with error screen
-        if (!data) {
-          setError(err.message || "Failed to load student attendance data");
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
+    fetchAttendance(true);
+
+    // Auto-refresh every 12 seconds so new faculty subjects and attendance reflect live
+    const interval = setInterval(() => {
+      if (typeof document !== "undefined" && document.visibilityState === "visible") {
+        fetchAttendance(true);
       }
-    }
-    fetchData();
-    return () => {
-      isMounted = false;
-    };
+    }, 12000);
+
+    return () => clearInterval(interval);
   }, [user]);
 
   // Selected subject metadata
@@ -232,6 +238,16 @@ export default function StudentDashboard() {
               <Camera className="h-3.5 w-3.5 text-rose-500" />
               <span className="hidden sm:inline">Update Photo</span>
             </Link>
+
+            <button
+              onClick={() => fetchAttendance(false)}
+              disabled={isRefreshing}
+              className="p-3 rounded-xl border-2 border-slate-900 bg-white text-slate-900 hover:bg-slate-50 shadow-[2px_2px_0_#0d0d0d] text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition active:translate-y-0.5"
+              title="Refresh courses and attendance"
+            >
+              <RefreshCw className={`h-3.5 w-3.5 text-blue-600 ${isRefreshing ? "animate-spin" : ""}`} />
+              <span className="hidden sm:inline">{isRefreshing ? "Syncing..." : "Refresh"}</span>
+            </button>
 
             <button
               onClick={() => logout("/login?role=student")}

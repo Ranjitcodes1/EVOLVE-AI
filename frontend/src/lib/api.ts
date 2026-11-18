@@ -153,8 +153,22 @@ export interface AuditLogItem {
 }
 
 class ApiClient {
+  public getRoleFromPath(): "teacher" | "student" | "admin" | null {
+    if (typeof window === "undefined") return null;
+    const path = window.location.pathname;
+    if (path.startsWith("/teacher")) return "teacher";
+    if (path.startsWith("/student")) return "student";
+    if (path.startsWith("/admin")) return "admin";
+    return null;
+  }
+
   private getToken(): string | null {
     if (typeof window !== "undefined") {
+      const role = this.getRoleFromPath();
+      if (role) {
+        const roleToken = localStorage.getItem(`snapclass_token_${role}`);
+        if (roleToken) return roleToken;
+      }
       return localStorage.getItem("snapclass_token");
     }
     return null;
@@ -186,14 +200,19 @@ class ApiClient {
     if (!res.ok) {
       if (res.status === 401 || res.status === 403) {
         if (typeof window !== "undefined") {
+          const role = this.getRoleFromPath();
+          if (role) {
+            localStorage.removeItem(`snapclass_token_${role}`);
+            localStorage.removeItem(`snapclass_user_${role}`);
+          }
           localStorage.removeItem("snapclass_token");
           localStorage.removeItem("snapclass_user");
           try {
             sessionStorage.removeItem("snapclass_student_cache");
           } catch {}
           if (!window.location.pathname.startsWith("/login") && window.location.pathname !== "/") {
-            const role = window.location.pathname.includes("teacher") ? "teacher" : "student";
-            window.location.href = `/login?role=${role}&expired=1`;
+            const redirectRole = role || (window.location.pathname.includes("teacher") ? "teacher" : "student");
+            window.location.href = `/login?role=${redirectRole}&expired=1`;
           }
         }
       }
@@ -218,6 +237,9 @@ class ApiClient {
       body: JSON.stringify({ email, password }),
     });
     if (typeof window !== "undefined") {
+      const unifiedRole = (res.role === "faculty" || res.role === "teacher") ? "teacher" : res.role;
+      localStorage.setItem(`snapclass_token_${unifiedRole}`, res.access_token);
+      localStorage.setItem(`snapclass_user_${unifiedRole}`, JSON.stringify(res));
       localStorage.setItem("snapclass_token", res.access_token);
       localStorage.setItem("snapclass_user", JSON.stringify(res));
     }

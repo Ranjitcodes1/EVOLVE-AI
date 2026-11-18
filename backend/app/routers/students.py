@@ -263,15 +263,18 @@ def get_my_attendance(
 
     matching_divs = db.query(Division).filter(
         Division.division_name.ilike(div_name),
-        Division.semester == sem
+        (Division.semester == sem) | (Division.semester.is_(None)) | (Division.semester == 0)
     ).all()
     matching_div_ids = [d.id for d in matching_divs]
     if student.division_id and student.division_id not in matching_div_ids:
         matching_div_ids.append(student.division_id)
 
-    # 1. Offerings for matching divisions
+    # 1. Offerings for matching divisions (check by division IDs and division name + semester)
     division_offerings = db.query(AcademicOffering).filter(
-        AcademicOffering.division_id.in_(matching_div_ids)
+        (AcademicOffering.division_id.in_(matching_div_ids)) | (
+            ((AcademicOffering.semester == sem) | (AcademicOffering.semester.is_(None))) &
+            AcademicOffering.division.has(Division.division_name.ilike(div_name))
+        )
     ).all()
 
     # 2. Offerings explicitly enrolled

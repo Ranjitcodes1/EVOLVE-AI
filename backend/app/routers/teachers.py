@@ -332,17 +332,22 @@ def get_my_offerings(
             ).all()
         )
         if off.division:
+            off_div_name = off.division.division_name
+            off_sem = off.semester or off.division.semester or 3
             matching_div_ids = [
                 d.id for d in db.query(Division.id).filter(
-                    Division.division_name.ilike(off.division.division_name),
-                    Division.semester == off.division.semester
+                    Division.division_name.ilike(off_div_name),
+                    (Division.semester == off_sem) | (Division.semester.is_(None)) | (Division.semester == 0)
                 ).all()
             ]
             if off.division_id not in matching_div_ids:
                 matching_div_ids.append(off.division_id)
             div_students = db.query(Student.id).filter(
                 Student.status == "active",
-                Student.division_id.in_(matching_div_ids)
+                (Student.division_id.in_(matching_div_ids)) | (
+                    ((Student.semester == off_sem) | (Student.semester.is_(None))) &
+                    Student.division.has(Division.division_name.ilike(off_div_name))
+                )
             ).all()
             for (sid,) in div_students:
                 enrolled_ids.add(sid)
@@ -413,17 +418,22 @@ def get_offering_student_roster(
 
     # 2. Union all active students in matching division and auto-backfill enrollments
     if offering.division:
+        off_div_name = offering.division.division_name
+        off_sem = offering.semester or offering.division.semester or 3
         matching_div_ids = [
             d.id for d in db.query(Division.id).filter(
-                Division.division_name.ilike(offering.division.division_name),
-                Division.semester == offering.division.semester
+                Division.division_name.ilike(off_div_name),
+                (Division.semester == off_sem) | (Division.semester.is_(None)) | (Division.semester == 0)
             ).all()
         ]
         if offering.division_id not in matching_div_ids:
             matching_div_ids.append(offering.division_id)
         div_students = db.query(Student).filter(
             Student.status == "active",
-            Student.division_id.in_(matching_div_ids)
+            (Student.division_id.in_(matching_div_ids)) | (
+                ((Student.semester == off_sem) | (Student.semester.is_(None))) &
+                Student.division.has(Division.division_name.ilike(off_div_name))
+            )
         ).all()
         for ds in div_students:
             student_ids.add(ds.id)

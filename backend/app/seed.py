@@ -112,7 +112,12 @@ def seed_database(force_reseed: bool = False):
             subject_name="Computer Organization and Architecture",
             department_id=dept.id
         )
-        db.add_all([sub1, sub2, sub3])
+        sub4 = Subject(
+            subject_code="CS401",
+            subject_name="Object Oriented Programming",
+            department_id=dept.id
+        )
+        db.add_all([sub1, sub2, sub3, sub4])
         db.flush()
 
         # 5. Academic Offerings
@@ -137,7 +142,14 @@ def seed_database(force_reseed: bool = False):
             semester=3,
             section="A"
         )
-        db.add_all([offering1, offering2, offering3])
+        offering4 = AcademicOffering(
+            subject_id=sub4.id,
+            division_id=division.id,
+            academic_year="2026-2027",
+            semester=3,
+            section="A"
+        )
+        db.add_all([offering1, offering2, offering3, offering4])
         db.flush()
 
         default_password = get_password_hash("Password123!")
@@ -187,9 +199,10 @@ def seed_database(force_reseed: bool = False):
         db.add_all([faculty_member, teacher_alias])
         db.flush()
 
-        # Assign Faculty to CS201 and CS202
+        # Assign Faculty to CS201, CS202 and CS401
         db.add(TeacherOffering(teacher_id=faculty_member.id, offering_id=offering1.id, role="primary"))
         db.add(TeacherOffering(teacher_id=faculty_member.id, offering_id=offering2.id, role="primary"))
+        db.add(TeacherOffering(teacher_id=faculty_member.id, offering_id=offering4.id, role="primary"))
         db.add(TeacherOffering(teacher_id=teacher_alias.id, offering_id=offering1.id, role="secondary"))
         db.flush()
 
@@ -240,6 +253,7 @@ def seed_database(force_reseed: bool = False):
             db.add(StudentEnrollment(student_id=st.id, offering_id=offering1.id, status="enrolled"))
             db.add(StudentEnrollment(student_id=st.id, offering_id=offering2.id, status="enrolled"))
             db.add(StudentEnrollment(student_id=st.id, offering_id=offering3.id, status="enrolled"))
+            db.add(StudentEnrollment(student_id=st.id, offering_id=offering4.id, status="enrolled"))
 
             # Generate synthetic 512-d unit vector
             vec = np.random.randn(512).astype(np.float32)
@@ -297,6 +311,7 @@ def seed_database(force_reseed: bool = False):
         db.add(StudentEnrollment(student_id=ranjit_student.id, offering_id=offering1.id, status="enrolled"))
         db.add(StudentEnrollment(student_id=ranjit_student.id, offering_id=offering2.id, status="enrolled"))
         db.add(StudentEnrollment(student_id=ranjit_student.id, offering_id=offering3.id, status="enrolled"))
+        db.add(StudentEnrollment(student_id=ranjit_student.id, offering_id=offering4.id, status="enrolled"))
 
         ranjit_emb = StudentFaceEmbedding(
             student_id=ranjit_student.id,
